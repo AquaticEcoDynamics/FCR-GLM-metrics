@@ -1,0 +1,148 @@
+
+&glm_setup
+   sim_name = 'FCR'
+   max_layers = 500
+   min_layer_vol = 0.025
+   min_layer_thick = 0.1
+   max_layer_thick = 0.2
+   non_avg = .true.
+/
+&wq_setup
+   wq_lib = 'aed'
+   wq_nml_file = 'aed/aed2_4zones.nml'
+   ode_method = 1
+   split_factor = 1
+   bioshade_feedback = .true.
+   repair_state = .true.
+/
+&light
+   light_mode = 0
+   n_bands = 4
+   light_extc = 1, 0.5, 2, 4
+   energy_frac = 0.51, 0.45, 0.035, 0.005
+   Benthic_Imin = 10
+   Kw = 0.4808426568269731
+/
+&mixing
+   coef_mix_conv = 0.2
+   coef_wind_stir = 0.23
+   coef_mix_shear = 0.3
+   coef_mix_turb = 0.51
+   coef_mix_KH = 0.3
+   !coef_mix_shreq = 0.1506756631528729
+   coef_mix_shreq = 0
+   deep_mixing = 1
+   !coef_mix_hyp = 5.874908532252400e-06
+   coef_mix_hyp = 1.848427198317100e-06
+/
+&morphometry
+   lake_name = 'FallingCreek'
+   latitude = 37.30768
+   longitude = -79.83707
+   bsn_len = 711.699
+   bsn_wid = 226.03
+   bsn_vals = 31
+   H = 497.683, 497.983, 498.283, 498.683, 498.983, 499.283, 499.583, 499.883, 500.183, 500.483, 500.783, 501.083, 501.383, 501.683, 501.983, 502.283, 502.583, 502.883, 503.183, 503.483, 503.783, 504.083, 504.383, 504.683, 505.083, 505.383, 505.683, 505.983, 506.283, 506.583, 506.983
+   A = 0, 61.408883, 494.615572, 1201.23579, 2179.597283, 3239.620513, 4358.358439, 5637.911458, 6929.077352, 8228.697419, 9469.324081, 10811.30792, 12399.67051, 14484.22802, 16834.20941, 19631.05422, 22583.1399, 25790.70893, 28442.99667, 31155.95008, 36269.3312, 42851.13714, 51179.89109, 59666.85885, 68146.39437, 76424.14457, 85430.25429, 95068.47603, 103030.4489, 111302.1604, 119880.9164
+/
+&time
+   timefmt = 2
+   start = '2015-07-19 00:00:00'
+   stop = '2016-12-02 00:00:00'
+   dt = 3600
+   num_days = 1
+   timezone = -5
+/
+&output
+   out_dir = 'output'
+   out_fn = 'output'
+   nsave = 24
+   csv_lake_fname = 'lake'
+/
+&init_profiles
+   num_depths = 28
+   lake_depth = 9.3
+   the_depths = 0.1, 0.33, 0.66, 1, 1.33, 1.66, 2, 2.33, 2.66, 3, 3.33, 3.66, 4, 4.33, 4.66, 5, 5.33, 5.66, 6, 6.33, 6.66, 7, 7.33, 7.66, 8, 8.33, 8.66, 9
+   the_temps = 27.745, 27.372, 26.836, 26.284, 25.802, 25.321, 24.824, 23.898, 22.972, 22.017, 21.035, 20.053, 19.041, 17.733, 16.425, 15.077, 14.461, 13.846, 13.211, 13.205, 13.198, 13.191, 13.180, 13.169, 13.158, 13.148, 13.138, 13.128
+   the_sals = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   num_wq_vars = 5
+   wq_names = 'OXY_oxy','NIT_amm','NIT_nit','PHS_frp','OGM_doc'
+   wq_init_vals = 268.361, 276.656, 288.558, 300.820, 308.283, 315.746, 323.435, 300.333, 277.232, 253.430, 171.743, 90.057, 5.895, 22.579, 39.263, 56.452, 144.961, 233.469, 324.659, 326.527, 328.394, 330.319, 330.802, 331.286, 331.784, 329.565, 327.345, 325.058,
+   0.721, 0.670, 0.596, 0.521, 0.448, 0.388, 0.388, 0.388, 0.388, 0.388, 0.388, 0.388, 2.310, 5.480, 8.651, 11.918, 10.622, 9.326, 7.992, 7.839, 9.444, 11.099, 12.704, 14.310, 15.965, 16.349, 16.733, 17.129,
+   0.065, 0.060, 0.052, 0.045, 0.038, 0.032, 0.032, 0.032, 0.032, 0.032, 0.032, 0.032, 0.035, 0.039, 0.044, 0.048, 0.053, 0.057, 0.062, 0.068, 0.077, 0.086, 0.095, 0.104, 0.113, 0.113, 0.113, 0.113,
+   0.084, 0.084, 0.084, 0.084, 0.084, 0.085, 0.086, 0.088, 0.089, 0.091, 0.093, 0.094, 0.086, 0.072, 0.057, 0.042, 0.048, 0.054, 0.060, 0.062, 0.060, 0.058, 0.057, 0.055, 0.053, 0.084, 0.115, 0.147,
+   27.477, 27.094, 26.545, 25.978, 25.429, 24.934, 24.676, 24.427, 24.177, 23.919, 23.670, 23.420, 22.481, 21.107, 19.734, 18.318, 18.318, 18.318, 18.318, 18.198, 17.892, 17.578, 17.273, 16.967, 16.653, 19.126, 21.599, 24.147
+   snow_thickness = 0
+   white_ice_thickness = 0
+   blue_ice_thickness = 0
+   avg_surf_temp = 6
+/
+&meteorology
+   met_sw = .true.
+   lw_type = 'LW_IN'
+   rain_sw = .false.
+   atm_stab = 0
+   catchrain = .false.
+   rad_mode = 1
+   albedo_mode = 4
+   cloud_mode = 4
+   meteo_fl = 'inputs/met_avg_filtered.csv' !these met data are from local met station at reservoir- SW is filtered to remove values outside of what the solar geometry allows, following Thomas et al. 2020 WRR
+   subdaily = .true.
+   wind_factor = 0.7887615782860841
+   sw_factor = 0.8804749577482354
+   !sw_factor = 0.9
+   lw_factor = 0.9553289064514936
+   at_factor = 1
+   rh_factor = 1
+   rain_factor = 1
+   cd = 0.001799898178566300
+   ce = 0.001799898178566300
+   ch = 0.001722452145632100
+   rain_threshold = 0.04
+   runoff_coef = 0.2
+   time_fmt = 'YYYY-MM-DD hh:mm:ss'
+/
+&inflow
+   num_inflows = 2
+   names_of_strms = 'weir','SSS'
+   subm_flag = .false., .true.
+   strm_hf_angle = 55, -15
+   strmbd_slope = 0.05, 15
+   !inflow_factor = 1, 0.5811603370304192
+   inflow_factor = 1, 0.4625904791977192
+   strmbd_drag = 0.03, 0.03
+   subm_elev = 7.166530546, 1.631309262885859
+   inflow_fl = 'inputs/FCR_weir_inflow_2013_2020_20220411_allfractions_2poolsDOC_1dot5xDOCr.csv', 'inputs/inflow_SSS_K_elevation_waterquality.csv'
+   inflow_varnum = 37
+   inflow_vars = 'FLOW','TEMP','SALT','TRC_tr1','TRC_age','NCS_ss1','NCS_ss2','OXY_oxy','CAR_dic','CAR_pH','CAR_ch4','CAR_ch4_bub','SIL_rsi','NIT_amm','NIT_nit','PHS_frp','PHS_frp_ads','OGM_doc','OGM_poc','OGM_don','OGM_pon','OGM_dop','OGM_pop','OGM_docr','OGM_donr','OGM_dopr','OGM_cpom','PHY_cyano','PHY_cyano_IN','PHY_cyano_IP','PHY_green','PHY_green_IN','PHY_green_IP','PHY_diatom','PHY_diatom_IN','PHY_diatom_IP','BIV_filtfrac'
+/
+&outflow
+   num_outlet = 2
+   flt_off_sw = .false., .false.
+   outl_elvs = 506.9, 498
+   !outl_elvs = 506.9, 502
+   bsn_len_outl = 711.699, 711.699
+   bsn_wid_outl = 226.03. 226.03
+   outflow_fl = 'inputs/FCR_spillway_outflow_WeirOnly_2013_2020_20211102.csv', 'inputs/outflow_K.csv'
+   !outflow_factor = 1, 0.5811603370304192
+   outflow_factor = 1, 0.4625904791977192
+/
+&snowice
+   snow_albedo_factor = 0.8
+   snow_rho_max = 300
+   snow_rho_min = 50
+   min_ice_thickness = 0.001
+   dt_iceon_avg = 0.01
+   avg_surf_temp_thres = 0.5
+/
+&sediment
+   benthic_mode = 2
+   sed_heat_model = 1
+   n_zones = 4
+   zone_heights = 3, 5, 7, 9.5
+   sed_heat_Ksoil = 1.381645281461431, 1.383844036964102, 1.167771843629229, 1.167770342770091
+   sed_temp_depth = 0.5, 0.5, 0.5, 0.5
+   sed_temp_mean = 9.150705181966272, 9.562712085151770, 11.55261689452128, 22.00390982315064
+   sed_temp_amplitude = 2.942283122961325, 4.605630569673780, 5.856134610029004, 5.994413468921265
+   sed_temp_peak_doy = 260.0000000000000, 290.0795961443200, 289.8707269941000, 289.9766328894900
+/
