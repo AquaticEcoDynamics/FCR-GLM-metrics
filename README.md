@@ -56,7 +56,7 @@ Note: The working directory and the path for saving the csv files in the Rscript
 ## Uncertainty_analysis
 This folder includes the setup of the uncertainty analysis using pestpp-ies, a model-independent iterative smoother. The following commands start the uncertainty analysis:
 1. Changing directory to the 'Uncertainty analysis folder' (cd .../FCR-GLM_metrics/Uncertainty_analysis).
-2. python3 workflow.py (this initiates the pestpp-ies process with 10 workers on the local computer).
+2. python3 workflow.py (this initiates the pestpp-ies process with 10 workers on the local computer).  
 The prior and posterior model output files used for creating Figure 8 are also included in the folder ('glm3_reweight_ies.0.obs.csv' = prior, 'glm3_reweight_ies.3.obs.csv' = posterior).
 
 ## R-scripts
