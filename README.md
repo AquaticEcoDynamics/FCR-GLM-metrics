@@ -51,7 +51,13 @@ Note: The working directory and the path for saving the csv files in the Rscript
 - PEST_routine_deepm1 folder: This folder includes the setup of the PEST calibration for the deep mixing 1 naive model. 
 - PEST_EXM_weight1_deepm1: This folder includes the setup of the PEST calibration for the deep mixing 1 with weighting scheme 1 based on the system-inspired approach.  
 - PEST_EXM_weight2_deepm1: This folder includes the setup of the PEST calibration for the deep mixing 1 with weighting scheme 2 based on the system-inspired approach.  
-- PEST_EXM_weight3_deepm1: This folder includes the setup of the PEST calibration for the deep mixing 1 with weighting scheme 3 based on the system-inspired approach. 
+- PEST_EXM_weight3_deepm1: This folder includes the setup of the PEST calibration for the deep mixing 1 with weighting scheme 3 based on the system-inspired approach.
+
+## Uncertainty_analysis
+This folder includes the setup of the uncertainty analysis using pestpp-ies, a model-independent iterative smoother. The following commands start the uncertainty analysis:
+1. Changing directory to the 'Uncertainty analysis folder' (cd .../FCR-GLM_metrics/Uncertainty_analysis).
+2. python3 workflow.py (this initiates the pestpp-ies process with 10 workers on the local computer).
+The prior and posterior model output files used for creating Figure 8 are also included in the folder ('glm3_reweight_ies.0.obs.csv' = prior, 'glm3_reweight_ies.3.obs.csv' = posterior).
 
 ## R-scripts
 This repo includes all the R scripts for the calculation of observed extra metrics, for creating figures and calculating error metrics. 
@@ -66,5 +72,8 @@ This repo includes all the R scripts for the calculation of observed extra metri
 - Observed_EXM.R - This script calculates the extra metrics thermocline depth, and Schmidt stability from the observed temperature depth profile data and calculates the extra metrics anoxia, and metalimnetic oxygen minima from the observed dissolved oxygen depth profile data. The csv files created (‘obs_td.csv’,  ‘obs_SS.csv’, ‘mom_observed.csv’, ‘anoxia_observed.csv’) are saved in the ‘observations’ folder.
 - Deepm1_MEF.R - This script includes the calculation of the MEF for all deep mixing 1 models, specifically MEF of extra metrics (thermocline depth, Schmidt stability, anoxia, and metalimnetic oxygen minima) predicted by the deep mixing 1 naive model, additionally MEF of temperature, dissolved oxygen and extra metrics predicted by the three deep mixing 1 models based on the system-inspired approach with different weighting schemes. The calculated MEF values are saved to ‘observations/error_stats.csv’.  Note: The last section of the script, Anoxia, is to be run in three different runs based on the instructions in the script.
 - Rolling_average_noise.R - This script includes the calculation of the measurement noise for observation groups temperature, oxygen, thermocline depth, Schmidt stability, metalimnetic oxygen minimum, and the number of anoxic layers.
+
+## Results
+This folder includes all the figures created by the R scripts. Their numbering matches the Figure captions in the manuscript.
 
 
