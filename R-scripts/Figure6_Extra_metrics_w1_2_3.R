@@ -140,7 +140,7 @@ plot_2 <- thermo_depth_model_w1 %>%
     legend.direction="horizontal",
     legend.key.height = unit(2, "mm"),
     legend.spacing.x = unit(1.5, 'mm'),
-    panel.spacing = unit(1, "lines")
+    panel.spacing = unit(0.6, "lines")
   )
 
 plot_2
