@@ -117,15 +117,15 @@ for (i in 1:nrow(td_merge_w3)) {
 #error[error$metric=="TD" & error$calibration=="PEST_exm_w3", "Calibration.deepm2"] <- MEFF_TD_w3
 
 plot_2 <- thermo_depth_model_w1 %>%
-  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="Mod_w1 TD", group=year), lty=1, size=0.5) +
+  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="PEST_w1 TD", group=year), lty=1, size=0.5) +
   ggplot2::geom_line()+
-  ggplot2::geom_line(data=thermo_depth_model_w2, aes(x = DateTime, y = td_model, colour="Mod_w2 TD", group=year), lty=2, size=0.5)+
+  ggplot2::geom_line(data=thermo_depth_model_w2, aes(x = DateTime, y = td_model, colour="PEST_w2 TD", group=year), lty=2, size=0.5)+
   facet_wrap(~ year, nrow = 1, scales = "free_x")+
-  ggplot2::geom_line(data=thermo_depth_model_w3, aes(x = DateTime, y = td_model, colour="Mod_w3 TD", group=year), lty=3, size=0.8)+
+  ggplot2::geom_line(data=thermo_depth_model_w3, aes(x = DateTime, y = td_model, colour="PEST_w3 TD", group=year), lty=3, size=0.8)+
   ggplot2::geom_point(data=obs_TD[-1,], aes(x=DateTime, y=thermo.depth, colour="Obs. TD"), pch=10)+
   ggplot2::labs(x = "Date", y = "Depth (m)")+
   ggplot2::scale_y_reverse(limits = c(6, -0.5), breaks= c(0, 1, 2, 3, 4, 5, 6), labels= c("0", "1", "2", "3", "4", "5", "6"))+
-  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "Mod_w1 TD"="#FF61CC", "Mod_w2 TD"="#FF61CC", "Mod_w3 TD"="#FF61CC"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "PEST_w1 TD"="#FF61CC", "PEST_w2 TD"="#FF61CC", "PEST_w3 TD"="#FF61CC"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 10),
@@ -215,11 +215,11 @@ SS_plot <- ggplot(data=schmidt_stability_obs, aes(x=datetime, y=schmidt.stabilit
   ylab("Schmidt stability")+
   xlab("Date")+
   ylim(c(0, 70))+
-  geom_line(data=schmidt_stability_w1, aes(x=datetime, y=ss_w1, colour="Mod_w1 SS"), lty=1, size=0.5)+
-  geom_line(data=schmidt_stability_w2, aes(x=datetime, y=ss_w2, colour="Mod_w2 SS"), lty=2, size=0.5)+
-  geom_line(data=schmidt_stability_w3, aes(x=datetime, y=ss_w3, colour="Mod_w3 SS"), lty=3, size=0.8)+
+  geom_line(data=schmidt_stability_w1, aes(x=datetime, y=ss_w1, colour="PEST_w1 SS"), lty=1, size=0.5)+
+  geom_line(data=schmidt_stability_w2, aes(x=datetime, y=ss_w2, colour="PEST_w2 SS"), lty=2, size=0.5)+
+  geom_line(data=schmidt_stability_w3, aes(x=datetime, y=ss_w3, colour="PEST_w3 SS"), lty=3, size=0.8)+
   scale_x_date(expand=c(0.01,0.01))+
-  scale_colour_manual(values=c("Obs. SS"="black", "Mod_w1 SS" ="#00BFC4", "Mod_w2 SS" ="#00BFC4", "Mod_w3 SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+  scale_colour_manual(values=c("Obs. SS"="black", "PEST_w1 SS" ="#00BFC4", "PEST_w2 SS" ="#00BFC4", "PEST_w3 SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -340,17 +340,17 @@ merge_w1$DateTime <- as.Date(merge_w1$DateTime, format="%Y-%m-%d")
 merge_w2$DateTime <- as.Date(merge_w2$DateTime, format="%Y-%m-%d")
 merge_w3$DateTime <- as.Date(merge_w3$DateTime, format="%Y-%m-%d")
 
-plot_MOM <-ggplot(data=merge_w1, aes(x=DateTime, y=deviation, colour="Mod_w1 MOM"))+
+plot_MOM <-ggplot(data=merge_w1, aes(x=DateTime, y=deviation, colour="PEST_w1 MOM"))+
   geom_line(lty=1, size=0.5)+
-  geom_line(data=merge_w2, aes(x=DateTime, y=deviation, colour="Mod_w2 MOM"), lty=2, size=0.5)+
-  geom_line(data=merge_w3, aes(x=DateTime, y=deviation, colour="Mod_w3 MOM"), lty=3, size=0.8)+
+  geom_line(data=merge_w2, aes(x=DateTime, y=deviation, colour="PEST_w2 MOM"), lty=2, size=0.5)+
+  geom_line(data=merge_w3, aes(x=DateTime, y=deviation, colour="PEST_w3 MOM"), lty=3, size=0.8)+
   geom_point(data=obs_mom, aes(x=DateTime, y=deviation, colour="Obs. MOM"), pch=10)+
   geom_hline(yintercept=0, lty=3)+
   xlab("Date")+
   ylim(c(-250, 250))+
   ylab(expression(bold(MOM~(mmol/m^{3}))))+
   scale_x_date(expand=c(0.01,0.01))+
-  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "Mod_w1 MOM" ="#CD9600", "Mod_w2 MOM" ="#CD9600", "Mod_w3 MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "PEST_w1 MOM" ="#CD9600", "PEST_w2 MOM" ="#CD9600", "PEST_w3 MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -364,14 +364,13 @@ plot_MOM <-ggplot(data=merge_w1, aes(x=DateTime, y=deviation, colour="Mod_w1 MOM
     legend.direction="horizontal",
     plot.margin = unit(c(5.5,10,5.5,5.5), "pt"),
     legend.key.height = unit(2, "mm"),
-    legend.spacing.x = unit(1.5, 'mm')
-
+    legend.spacing.x = unit(1.5, 'mm'),
+    legend.margin = margin(2, 2, 2, 2)
   )
 plot_MOM
 
 #Anoxia
 #IMPORTANT: This code is to be run in three different runs, make sure you follow the instructions in the comment sections
-
 # START FIRST MODEL RUN HERE
 output <- nc_open('Calibrated_models/Deepm2_exm_weight1/output/output.nc')
 
@@ -451,8 +450,8 @@ oxy_interp_depth <- crossing(
 ) %>%
   group_by(DateTime) %>%
   mutate(Oxy = estimate_oxy_by_date(DateTime[1], Depth))
-#################STOP SECOND RUN HERE, RUN LINE 456 - 459  ###########
-#################STOP THIRD RUN HERE, RUN LINE 463 ONWARDS ###########
+#################STOP SECOND RUN HERE, RUN LINE 467 - 473  ###########
+#################STOP THIRD RUN HERE, RUN LINE 475 ONWARDS ###########
 
 #Model anoxia 
 anoxia <- oxy_interp_depth
@@ -463,7 +462,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #model weight 2 
 output <- nc_open('Calibrated_models/Deepm2_exm_weight2/output/output.nc')
-#####END OF FIRST RUN, START SECOND RUN FROM LINE 364 - LINE 439 #########
+#####END OF FIRST RUN, START SECOND RUN FROM LINE 377 - LINE 453 #########
 
 # Only second run (Model 2)
 
@@ -471,7 +470,7 @@ anoxia$Oxy1 <- oxy_interp_depth$Oxy
 anoxia$Oxy1 <- anoxia$Oxy1 * 32/1000
 anoxia$Oxy1<- ifelse(anoxia$Oxy1<=1, 1, 0)
 output <- nc_open('Calibrated_models/Deepm2_exm_weight3/output/output.nc')
-#####END OF SECOND RUN, START THIRD RUN FROM LINE 364 - LINE 439 #########
+#####END OF SECOND RUN, START THIRD RUN FROM LINE 377 - LINE 453 #########
 
 # Only third run (Model 3)
 anoxia$Oxy2 <- oxy_interp_depth$Oxy

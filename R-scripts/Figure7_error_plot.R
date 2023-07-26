@@ -25,14 +25,14 @@ obs_oxy$DateTime <- as.Date(obs_oxy$DateTime, format="%Y-%m-%d")
 
 depths<- c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9.2) 
 
-#Deepm2 routine
-Deepm2_routine <- file.path(sim_folder, 'Calibrated_models/Deepm2_routine/output/output.nc')
+#Deepm2 naive
+Deepm2_naive <- file.path(sim_folder, 'Calibrated_models/Deepm2_naive/output/output.nc')
 
-deepm2_routine_oxy <- get_var(Deepm2_routine, "OXY_oxy", reference="surface", z_out=depths) %>%
+deepm2_naive_oxy <- get_var(Deepm2_naive, "OXY_oxy", reference="surface", z_out=depths) %>%
   pivot_longer(cols=starts_with("OXY_oxy_"), names_to="Depth", names_prefix="OXY_oxy_", values_to = "OXY_oxy")
-deepm2_routine_oxy$DateTime <- as.Date(deepm2_routine_oxy$DateTime, format="%Y-%m-%d")
+deepm2_naive_oxy$DateTime <- as.Date(deepm2_naive_oxy$DateTime, format="%Y-%m-%d")
 
-oxygen <- merge(obs_oxy, deepm2_routine_oxy, by=c("DateTime","Depth")) %>%
+oxygen <- merge(obs_oxy, deepm2_naive_oxy, by=c("DateTime","Depth")) %>%
   dplyr::rename(obsoxy = OXY_oxy.x, mod_oxy = OXY_oxy.y) 
 oxygen$DateTime <- as.Date(oxygen$DateTime, format="%Y-%m-%d")
 
@@ -43,16 +43,16 @@ for (i in 1:nrow(oxygen)) {
 }
 
 #Adding calculated MEF to error table
-#error[error$metric=="oxy" & error$calibration=="PEST_r", "Calibration.deepm2"] <- MEFF_oxy
+#error[error$metric=="oxy" & error$calibration=="PEST_N", "Calibration.deepm2"] <- MEFF_oxy
 
-#Deepm1 routine
-Deepm1_routine <- file.path(sim_folder, 'Calibrated_models/Deepm1_routine/output/output.nc')
+#Deepm1 naive
+Deepm1_naive <- file.path(sim_folder, 'Calibrated_models/Deepm1_naive/output/output.nc')
 
-deepm1_routine_oxy <- get_var(Deepm1_routine, "OXY_oxy", reference="surface", z_out=depths) %>%
+deepm1_naive_oxy <- get_var(Deepm1_naive, "OXY_oxy", reference="surface", z_out=depths) %>%
   pivot_longer(cols=starts_with("OXY_oxy_"), names_to="Depth", names_prefix="OXY_oxy_", values_to = "OXY_oxy")
-deepm1_routine_oxy$DateTime <- as.Date(deepm1_routine_oxy$DateTime, format="%Y-%m-%d")
+deepm1_naive_oxy$DateTime <- as.Date(deepm1_naive_oxy$DateTime, format="%Y-%m-%d")
 
-oxygen1 <- merge(obs_oxy, deepm1_routine_oxy, by=c("DateTime","Depth")) %>%
+oxygen1 <- merge(obs_oxy, deepm1_naive_oxy, by=c("DateTime","Depth")) %>%
   dplyr::rename(obsoxy = OXY_oxy.x, mod_oxy = OXY_oxy.y) 
 oxygen1$DateTime <- as.Date(oxygen1$DateTime, format="%Y-%m-%d")
 
@@ -63,20 +63,20 @@ for (i in 1:nrow(oxygen1)) {
 }
 
 #Adding calculated MEF to error table
-#error[error$metric=="oxy" & error$calibration=="PEST_r", "Calibration.deepm1"] <- MEFF_oxy1
+#error[error$metric=="oxy" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_oxy1
 
 #Observed temperature
 obs_temp<-read.csv('observations/CleanedObsTemp.csv') %>%
   filter(DateTime > "2016-12-01")
 obs_temp$DateTime <- as.Date(obs_temp$DateTime, format="%Y-%m-%d")
 
-#Deepm2 routine
-deepm2_routine_temp <- get_var(Deepm2_routine, "temp", reference="surface", z_out=depths) %>%
+#Deepm2 naive
+deepm2_naive_temp <- get_var(Deepm2_naive, "temp", reference="surface", z_out=depths) %>%
   pivot_longer(cols=starts_with("temp_"), names_to="Depth", names_prefix="temp_", values_to = "temp") %>%
   mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST"))) 
-deepm2_routine_temp$DateTime <- as.Date(deepm2_routine_temp$DateTime, format="%Y-%m-%d")
+deepm2_naive_temp$DateTime <- as.Date(deepm2_naive_temp$DateTime, format="%Y-%m-%d")
 
-temp <- merge(obs_temp, deepm2_routine_temp, by=c("DateTime","Depth")) %>%
+temp <- merge(obs_temp, deepm2_naive_temp, by=c("DateTime","Depth")) %>%
   dplyr::rename(obtemp = temp.x, modtemp = temp.y) 
 temp$DateTime <- as.Date(temp$DateTime, format="%Y-%m-%d")
 
@@ -86,15 +86,15 @@ for (i in 1:nrow(temp)) {
   MEFF_t<- 1-(sum(temp$MEFF_1)/sum(temp$MEFF_2))
 }
 
-#error[error$metric=="temp" & error$calibration=="PEST_r", "Calibration.deepm2"] <- MEFF_t
+#error[error$metric=="temp" & error$calibration=="PEST_N", "Calibration.deepm2"] <- MEFF_t
 
-#Deepm1 routine
-deepm1_routine_temp <- get_var(Deepm1_routine, "temp", reference="surface", z_out=depths) %>%
+#Deepm1 naive
+deepm1_naive_temp <- get_var(Deepm1_naive, "temp", reference="surface", z_out=depths) %>%
   pivot_longer(cols=starts_with("temp_"), names_to="Depth", names_prefix="temp_", values_to = "temp") %>%
   mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST"))) 
-deepm1_routine_temp$DateTime <- as.Date(deepm1_routine_temp$DateTime, format="%Y-%m-%d")
+deepm1_naive_temp$DateTime <- as.Date(deepm1_naive_temp$DateTime, format="%Y-%m-%d")
 
-temp1 <- merge(obs_temp, deepm1_routine_temp, by=c("DateTime","Depth")) %>%
+temp1 <- merge(obs_temp, deepm1_naive_temp, by=c("DateTime","Depth")) %>%
   dplyr::rename(obtemp = temp.x, modtemp = temp.y) 
 temp1$DateTime <- as.Date(temp1$DateTime, format="%Y-%m-%d")
 
@@ -104,7 +104,7 @@ for (i in 1:nrow(temp1)) {
   MEFF_t1<- 1-(sum(temp1$MEFF_1)/sum(temp1$MEFF_2))
 }
 
-#error[error$metric=="temp" & error$calibration=="PEST_r", "Calibration.deepm1"] <- MEFF_t1
+#error[error$metric=="temp" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_t1
 #write.csv(error, 'observations/error_stats.csv', row.names=FALSE)
 
 #ERROR PLOT
@@ -123,9 +123,9 @@ SS<- ggplot(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
   xlab("Calibration method")+ 
@@ -161,9 +161,9 @@ TD<- ggplot(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
   xlab("Calibration method")+ 
@@ -199,9 +199,9 @@ MOM<- ggplot(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibrati
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
   xlab("Calibration method")+ 
@@ -237,9 +237,9 @@ AF<- ggplot(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
   xlab("Calibration method")+ 
@@ -275,9 +275,9 @@ temp <- ggplot(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibr
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
   xlab("Calibration method")+ 
@@ -313,9 +313,9 @@ oxy <- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibrat
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_r", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
   xlab("Calibration method")+ 

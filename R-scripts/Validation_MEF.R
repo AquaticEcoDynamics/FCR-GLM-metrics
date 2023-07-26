@@ -46,7 +46,7 @@ for (i in 1:nrow(oxygen)) {
 }
 
 #deep mixing 2 naive
-error[error$metric=="oxy" & error$calibration=="PEST_r", "Validation.deepm2"] <- MEF_oxy
+error[error$metric=="oxy" & error$calibration=="PEST_N", "Validation.deepm2"] <- MEF_oxy
 
 #Deep mixing 2 exm w1
 new_w1 <- file.path(sim_folder, 'Validation/valid_exm_deepm2_w1/output/output.nc')
@@ -137,7 +137,7 @@ for (i in 1:nrow(temp)) {
   MEF_temp<- 1-(sum(temp$MEF_1)/sum(temp$MEF_2))
 }
 
-error[error$metric=="temp" & error$calibration=="PEST_r", "Validation.deepm2"] <- MEF_temp
+error[error$metric=="temp" & error$calibration=="PEST_N", "Validation.deepm2"] <- MEF_temp
 
 #Deep mixing 2 exm w1
 new_w1 <- file.path(sim_folder, 'Validation/valid_exm_deepm2_w1/output/output.nc')
@@ -254,7 +254,7 @@ for (i in 1:nrow(td_merge)) {
 }
 
 #Adding calculated Deep mixing 2 naive model TD MEF to error table
-error[error$metric=="TD" & error$calibration=="PEST_r", "Validation.deepm2"] <- MEFF_TD
+error[error$metric=="TD" & error$calibration=="PEST_N", "Validation.deepm2"] <- MEFF_TD
 
 #Schmidt stability
 #Modelled Schmidt stability (deepm2 naive model)
@@ -273,7 +273,7 @@ for (i in 1:nrow(SS_merge)) {
 }
 
 #Adding calculated Deep mixing 2 naive model SS MEF to error table
-error[error$metric=="SS" & error$calibration=="PEST_r", "Validation.deepm2"] <- MEFF_SS
+error[error$metric=="SS" & error$calibration=="PEST_N", "Validation.deepm2"] <- MEFF_SS
 
 #MOM
 #Oxygen deepm2 naive model
@@ -308,7 +308,7 @@ for (i in 1:nrow(merge_mom)) {
 }
 
 #Adding calculated Deep mixing 2 naive model MOM MEF to error table
-error[error$metric=="MOM" & error$calibration=="PEST_r", "Validation.deepm2"] <- MEFF_MOM
+error[error$metric=="MOM" & error$calibration=="PEST_N", "Validation.deepm2"] <- MEFF_MOM
 
 #############################################################################################################
 
@@ -689,8 +689,8 @@ for (i in 1:nrow(merge_anoxia)) {
 }
 
 #Adding calculated MEF to error table
-#Deepm2 routine
-error[error$metric=="A" & error$calibration=="PEST_r", "Validation.deepm2"] <- MEFF_anoxia
+#Deepm2 naive
+error[error$metric=="A" & error$calibration=="PEST_N", "Validation.deepm2"] <- MEFF_anoxia
 ##########################################################################################################################
 
 #Deepm2 exm w1
@@ -1091,7 +1091,7 @@ for (i in 1:nrow(oxygen)) {
 }
 
 #deep mixing 1 naive
-error[error$metric=="oxy" & error$calibration=="PEST_r", "Validation.deepm1"] <- MEF_oxy
+error[error$metric=="oxy" & error$calibration=="PEST_N", "Validation.deepm1"] <- MEF_oxy
 
 #Deep mixing 1 exm w1
 new_w1 <- file.path(sim_folder, 'Validation/valid_exm_deepm1_w1/output/output.nc')
@@ -1182,7 +1182,7 @@ for (i in 1:nrow(temp)) {
   MEF_temp<- 1-(sum(temp$MEF_1)/sum(temp$MEF_2))
 }
 
-error[error$metric=="temp" & error$calibration=="PEST_r", "Validation.deepm1"] <- MEF_temp
+error[error$metric=="temp" & error$calibration=="PEST_N", "Validation.deepm1"] <- MEF_temp
 
 #Deep mixing 1 exm w1
 new_w1 <- file.path(sim_folder, 'Validation/valid_exm_deepm1_w1/output/output.nc')
@@ -1299,7 +1299,7 @@ for (i in 1:nrow(td_merge)) {
 }
 
 #Adding calculated Deep mixing 1 naive model TD MEF to error table
-error[error$metric=="TD" & error$calibration=="PEST_r", "Validation.deepm1"] <- MEFF_TD
+error[error$metric=="TD" & error$calibration=="PEST_N", "Validation.deepm1"] <- MEFF_TD
 
 #Schmidt stability
 #Modelled Schmidt stability (deepm2 naive model)
@@ -1318,7 +1318,7 @@ for (i in 1:nrow(SS_merge)) {
 }
 
 #Adding calculated Deep mixing 1 naive model SS MEF to error table
-error[error$metric=="SS" & error$calibration=="PEST_r", "Validation.deepm1"] <- MEFF_SS
+error[error$metric=="SS" & error$calibration=="PEST_N", "Validation.deepm1"] <- MEFF_SS
 
 #MOM
 #Oxygen deepm1 naive model
@@ -1353,7 +1353,7 @@ for (i in 1:nrow(merge_mom)) {
 }
 
 #Adding calculated Deep mixing 1 naive model MOM MEF to error table
-error[error$metric=="MOM" & error$calibration=="PEST_r", "Validation.deepm1"] <- MEFF_MOM
+error[error$metric=="MOM" & error$calibration=="PEST_N", "Validation.deepm1"] <- MEFF_MOM
 
 #############################################################################################################
 
@@ -1735,7 +1735,7 @@ for (i in 1:nrow(merge_anoxia)) {
 
 #Adding calculated MEF to error table
 #Deepm1 naive
-error[error$metric=="A" & error$calibration=="PEST_r", "Validation.deepm1"] <- MEFF_anoxia
+error[error$metric=="A" & error$calibration=="PEST_N", "Validation.deepm1"] <- MEFF_anoxia
 ##########################################################################################################################
 
 #Deepm1 exm w1

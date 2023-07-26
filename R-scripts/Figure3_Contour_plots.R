@@ -13,7 +13,7 @@ setwd(".../FCR-GLM-metrics")
 
 #Modelled oxy
 sim_folder <- getwd()
-output <- nc_open("Calibrated_models/Deepm2_routine/output/output.nc")
+output <- nc_open("Calibrated_models/Deepm2_naive/output/output.nc")
 oxy<- ncvar_get(output, "OXY_oxy")
 depth<- ncvar_get(output, "z")
 depth[depth >= 100] <- NA
@@ -183,7 +183,7 @@ difference
 
 #Modelled
 sim_folder <- getwd()
-output <- nc_open("Calibrated_models/Deepm2_routine/output/output.nc")
+output <- nc_open("Calibrated_models/Deepm2_naive/output/output.nc")
 temp<- ncvar_get(output, "temp")
 depth<- ncvar_get(output, "z")
 depth[depth >= 100] <- NA
@@ -344,7 +344,7 @@ differencet <- ggplot() +
 differencet
   
 
-mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3)
+mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3, labels=c("a", "b", "c", "d", "e", "f"))
 mix
 
 ggsave("Results/Figure3.png",

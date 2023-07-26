@@ -16,7 +16,7 @@ library(patchwork)
 #Set working directory
 setwd(".../FCR-GLM-metrics")
 sim_folder <- getwd()
-PEST_calib <- file.path(sim_folder, 'Calibrated_models/Deepm1_routine/output/output.nc')
+PEST_calib <- file.path(sim_folder, 'Calibrated_models/Deepm1_naive/output/output.nc')
 error <- read.csv("observations/error_stats.csv")
 
 #Observed thermocline deph
@@ -55,7 +55,7 @@ for (i in 1:nrow(td_merge)) {
 }
 
 #Adding calculated MEF to error table
-#error[error$metric=="TD" & error$calibration=="PEST_r", "Calibration.deepm1"] <- MEFF_TD
+#error[error$metric=="TD" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_TD
 
 #Schmidt stability
 bathy <- read.csv('observations/bathymetry.csv')
@@ -86,7 +86,7 @@ for (i in 1:nrow(SS_merge)) {
 
 
 #Adding calculated MEF to error table
-#error[error$metric=="SS" & error$calibration=="PEST_r", "Calibration.deepm1"] <- MEFF_SS
+#error[error$metric=="SS" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_SS
 
 
 #MOM
@@ -131,11 +131,11 @@ for (i in 1:nrow(merge_mom)) {
 
 
 #Adding calculated MEF to error table
-#error[error$metric=="MOM" & error$calibration=="PEST_r", "Calibration.deepm1"] <- MEFF_MOM
+#error[error$metric=="MOM" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_MOM
 
 
 #Anoxia
-output <- nc_open('Calibrated_models/Deepm1_routine/output/output.nc')
+output <- nc_open('Calibrated_models/Deepm1_naive/output/output.nc')
 oxy<- ncvar_get(output, "OXY_oxy")
 depth<- ncvar_get(output, "z")
 depth[depth >= 100] <- NA
@@ -253,7 +253,7 @@ for (i in 1:nrow(merge_anoxia)) {
 }
 
 #Adding calculated MEF to error table
-#error[error$metric=="A" & error$calibration=="PEST_r", "Calibration.deepm1"] <- MEFF_anoxia
+#error[error$metric=="A" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_anoxia
 #write.csv(error, 'observations/error_stats.csv', row.names=FALSE)
 
 #Deepm1 extra metrics oxy and temp

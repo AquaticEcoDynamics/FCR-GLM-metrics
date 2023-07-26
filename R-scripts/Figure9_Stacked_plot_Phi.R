@@ -14,31 +14,31 @@ library(ggpubr)
 library(patchwork)
 
 #Set working directory
-setwd('.../FCR-GLM-metrics/Calibrated_models')
+setwd('.../FCR-GLM-metrics')
 sim_folder <- getwd()
 
 #Phi during the calibration recorded in glm3.iobj file which was converted to csv file for analysis
-#Routine deep mixing 2 model
-error_routine <- read.csv("Deepm2_routine/glm3.csv")
-error_r_1 <- subset(error_routine, select = c(1:5))
-error_r <- subset(error_routine, select = -c(1:5))
-melted <- melt(error_r, na.rm=TRUE)
-iteration <- rep(error_r_1$iteration, times=20)
+#Naive deep mixing 2 model
+error_naive <- read.csv("Calibrated_models/Deepm2_naive/glm3.csv")
+error_n_1 <- subset(error_naive, select = c(1:5))
+error_n <- subset(error_naive, select = -c(1:5))
+melted <- melt(error_n, na.rm=TRUE)
+iteration <- rep(error_n_1$iteration, times=20)
 new <- cbind(iteration, melted)
 new1 <- new[order(iteration),]  
 colnames(new1) <- c("Iteration", "Obs_group" ,"Phi")
 
 New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10))
-New_obs_group1 <- rep(New_obs_group, max(error_r_1$iteration)+1)
+New_obs_group1 <- rep(New_obs_group, max(error_n_1$iteration)+1)
 
-final_r <- cbind(new1, New_obs_group1)
+final_n <- cbind(new1, New_obs_group1)
 
 reorder <- c("Oxy", "Temp")
-new_data_r <- aggregate(Phi ~  factor(New_obs_group1, levels=reorder) + Iteration, data=final_r, sum)
-colnames(new_data_r) <- c("New_obs_group", "Iteration", "Phi")
-r<- ggplot(new_data_r, aes(x=Iteration, y=Phi, fill=New_obs_group)) + 
+new_data_n <- aggregate(Phi ~  factor(New_obs_group1, levels=reorder) + Iteration, data=final_n, sum)
+colnames(new_data_n) <- c("New_obs_group", "Iteration", "Phi")
+r<- ggplot(new_data_n, aes(x=Iteration, y=Phi, fill=New_obs_group)) + 
   geom_area(size=0.1, colour="black")+
-  ggtitle("Deep mixing 2 routine") +
+  ggtitle("Deep mixing 2 Naive") +
   ylim(c(0, 4000))+
   scale_fill_manual(
     name="Legend",
@@ -59,7 +59,7 @@ r<- ggplot(new_data_r, aes(x=Iteration, y=Phi, fill=New_obs_group)) +
 r
 
 #Weight 1, deep mixing 2 model
-error_w1 <- read.csv("Deepm2_exm_weight1/glm3.csv")
+error_w1 <- read.csv("Calibrated_models/Deepm2_exm_weight1/glm3.csv")
 error_w1_1 <- subset(error_w1, select = c(1:5))
 error_w1 <- subset(error_w1, select = -c(1:5))
 
@@ -104,7 +104,7 @@ w1_legend <- get_legend(w1)
 
 #Weight 2, deep mixing 2 model
 
-error_w2 <- read.csv("Deepm2_exm_weight2/glm3.csv")
+error_w2 <- read.csv("Calibrated_models/Deepm2_exm_weight2/glm3.csv")
 error_w2_1 <- subset(error_w2, select = c(1:5))
 error_w2 <- subset(error_w2, select = -c(1:5))
 
@@ -151,7 +151,7 @@ w2<- ggplot(new_data_w2, aes(x=Iteration, y=Phi, fill=New_obs_group)) +
 w2
 
 #w3
-error_w3 <- read.csv("Deepm2_exm_weight3/glm3.csv")
+error_w3 <- read.csv("Calibrated_models/Deepm2_exm_weight3/glm3.csv")
 
 error_w3_1 <- subset(error_w3, select = c(1:5))
 error_w3 <- subset(error_w3, select = -c(1:5))
@@ -197,8 +197,6 @@ w3
 
 stacked<- ggarrange(r, w1, w2, w3, ncol=2, nrow=2, common.legend=TRUE, legend.grob=w1_legend)
 stacked
-
-setwd('.../FCR-GLM-metrics')
 
 ggsave("Results/Figure9.png",
        plot = stacked,

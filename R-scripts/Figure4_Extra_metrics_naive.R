@@ -17,7 +17,7 @@ library(ggpubr)
 #Set working directory
 setwd(".../FCR-GLM-metrics")
 sim_folder <- getwd()
-PEST_calib <- file.path(sim_folder, 'Calibrated_models/Deepm2_routine/output/output.nc')
+PEST_calib <- file.path(sim_folder, 'Calibrated_models/Deepm2_naive/output/output.nc')
 error <- read.csv("observations/error_stats.csv")
 
 #Observed thermocline deph
@@ -56,7 +56,7 @@ for (i in 1:nrow(td_merge)) {
 }
 
 #Adding calculated MEF to error table
-#error[error$metric=="TD" & error$calibration=="PEST_r", "Calibration.deepm2"] <- MEFF_TD
+#error[error$metric=="TD" & error$calibration=="PEST_N", "Calibration.deepm2"] <- MEFF_TD
 
 #Ice on and off
 
@@ -102,9 +102,9 @@ merge_ice_new$IceOn_mod[merge_ice_new$IceOn_mod == 1] <- 1
 
 #Combined time series of thermocline depth and ice cover
 plot_2 <- thermo_depth_model %>%
-  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="Mod_r TD", group=year)) +
+  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="PEST_N TD", group=year)) +
   ggplot2::geom_line()+
-  geom_point(data=merge_ice_new, aes(x=DateTime, y=IceOn_mod, colour="Mod_r ice"), pch=0, size=1.8, stroke=0.5)+
+  geom_point(data=merge_ice_new, aes(x=DateTime, y=IceOn_mod, colour="PEST_N ice"), pch=0, size=1.8, stroke=0.5)+
   geom_point(data=merge_ice_new, aes(x=DateTime, y=IceOn, colour="Obs. ice"), pch=20, size=1)+
   ggplot2::geom_point(data=obs_TD[-1,], aes(x=DateTime, y=thermo.depth, colour="Obs. TD"), pch=10)+
   ggplot2::labs(x = "Date", y = "Depth (m)")+
@@ -118,7 +118,7 @@ plot_2 <- thermo_depth_model %>%
             xmin = as.Date("2019-11-30"), xmax = as.Date("2020-01-02"), colour='blue', fill='NA') +
   ggplot2::scale_y_reverse(limits = c(6, -0.5), breaks= c(0, 1, 2, 3, 4, 5, 6), labels= c("0", "1", "2", "3", "4", "5", "6"), sec.axis = sec_axis(~./1, name = "Ice cover", breaks=c(0, 1, 2, 3, 4, 5, 6), labels=c(" ", "On ", " ", "", "Off", " ", " ")))+
   ggplot2::scale_x_date(expand=c(0.01,0.01), date_breaks = "6 months")+
-  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "Mod_r TD"="#FF61CC", "Mod_r ice"="skyblue", "Obs. ice"="black"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, NA, NA), size=c(1.5, 0.8, 2, 2), shape=c(10, NA, 0, 20))))+
+  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "PEST_N TD"="#FF61CC", "PEST_N ice"="skyblue", "Obs. ice"="black"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, NA, NA), size=c(1.5, 0.8, 2, 2), shape=c(10, NA, 0, 20))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -165,16 +165,16 @@ for (i in 1:nrow(SS_merge)) {
 
 
 #Adding calculated MEF to error table
-#error[error$metric=="SS" & error$calibration=="PEST_r", "Calibration.deepm2"] <- MEFF_SS
+#error[error$metric=="SS" & error$calibration=="PEST_N", "Calibration.deepm2"] <- MEFF_SS
 
 SS_plot <- ggplot(data=schmidt_stability_obs, aes(x=datetime, y=schmidt.stability, colour="Obs. SS")) +
   geom_point(pch=10)+
   ylab("Schmidt stability")+
   xlab("Date")+
   ylim(c(0, 70))+
-  geom_line(data=schmidt_stability, aes(x=datetime, y=ss_PEST, colour="Mod_r SS"))+
+  geom_line(data=schmidt_stability, aes(x=datetime, y=ss_PEST, colour="PEST_N SS"))+
   scale_x_date(expand=c(0.01, 20))+
-  scale_colour_manual(values=c("Obs. SS"="black", "Mod_r SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
+  scale_colour_manual(values=c("Obs. SS"="black", "PEST_N SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -233,17 +233,17 @@ for (i in 1:nrow(merge_mom)) {
 
 
 #Adding calculated MEF to error table
-#error[error$metric=="MOM" & error$calibration=="PEST_r", "Calibration.deepm2"] <- MEFF_MOM
+#error[error$metric=="MOM" & error$calibration=="PEST_N", "Calibration.deepm2"] <- MEFF_MOM
 
 #plot MOM
-plot_MOM <-ggplot(data=merge_mod, aes(x=DateTime, y=deviation, colour="Mod_r MOM"))+
+plot_MOM <-ggplot(data=merge_mod, aes(x=DateTime, y=deviation, colour="PEST_N MOM"))+
   geom_line()+
   geom_point(data=obs_mom, aes(x=DateTime, y=deviation, colour="Obs. MOM"), pch=10)+
   geom_hline(yintercept=0, lty=3)+
   xlab("Date")+
   ylab(expression(bold(MOM~(mmol/m^{3}))))+
   scale_x_date(expand=c(0.01,0.01))+
-  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "Mod_r MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
+  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "PEST_N MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -262,7 +262,7 @@ plot_MOM <-ggplot(data=merge_mod, aes(x=DateTime, y=deviation, colour="Mod_r MOM
 plot_MOM
 
 #Anoxia
-output <- nc_open('Calibrated_models/Deepm2_routine/output/output.nc')
+output <- nc_open('Calibrated_models/Deepm2_naive/output/output.nc')
 oxy<- ncvar_get(output, "OXY_oxy")
 depth<- ncvar_get(output, "z")
 depth[depth >= 100] <- NA
@@ -427,7 +427,7 @@ for (i in 1:nrow(merge_anoxia)) {
 }
 
 #Adding calculated MEF to error table
-#error[error$metric=="A" & error$calibration=="PEST_r", "Calibration.deepm2"] <- MEFF_anoxia
+#error[error$metric=="A" & error$calibration=="PEST_N", "Calibration.deepm2"] <- MEFF_anoxia
 #write.csv(error, 'observations/error_stats.csv')
 
 #Sediment temperature obs
@@ -444,7 +444,7 @@ temp_z2 <- get_var(PEST_calib, var_name="temp", reference="surface", z_out=5) %>
   rename(water_temp_z2 =temp_5)
 
 #read nml file
-nml_file <- read_nml(nml_file = file.path(sim_folder, 'Calibrated_models/Deepm2_routine/glm3.nml'))
+nml_file <- read_nml(nml_file = file.path(sim_folder, 'Calibrated_models/Deepm2_naive/glm3.nml'))
 sed_temp_mean <- get_nml_value(nml_file, 'sed_temp_mean')
 sed_temp_amp <- get_nml_value(nml_file, 'sed_temp_amplitude')
 sed_temp_doy <- get_nml_value(nml_file, 'sed_temp_peak_doy')
@@ -455,14 +455,14 @@ for(i in 1:nrow(temp_z2)){
 }
 temp_z2$DateTime <- as.Date(temp_z2$DateTime, format="%Y-%m-%d")
 
-zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="Mod_r water temp 5 m"))+
+zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="PEST_N water temp 5 m"))+
   geom_line()+
-  geom_line(aes(x=DateTime, y=sed_temp_z2, colour="Mod_r sed temp z2"))+
+  geom_line(aes(x=DateTime, y=sed_temp_z2, colour="PEST_N sed temp z2"))+
   geom_point(data=filter(obs_temp, Depth==5), aes(x=DateTime, y=temp, colour="Obs. water temp 5 m"), pch=10)+
   labs(x = "Date", y = "Temperature (°C)")+
   scale_x_date(expand=c(0.01,0.01))+
   ylim(c(0, 30))+
-  scale_colour_manual(name="Legend", values=c("Obs. water temp 5 m"="black", "Mod_r water temp 5 m" ="black", "Mod_r sed temp z2"="green"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 1), shape=c(10, NA, NA))))+
+  scale_colour_manual(name="Legend", values=c("Obs. water temp 5 m"="black", "PEST_N water temp 5 m" ="black", "PEST_N sed temp z2"="green"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 1), shape=c(10, NA, NA))))+
   theme_light() +
     theme(
       plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -472,10 +472,12 @@ zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="Mod_r wate
       axis.text.x = ggplot2::element_text(size=9),
       axis.text.y = ggplot2::element_text(size=9),
       legend.title = ggplot2::element_blank(),
-      legend.position= c(0.5, 0.92),
+      legend.position= c(0.49, 0.92),
       legend.direction="horizontal",
       plot.margin = unit(c(5.5,10,5.5,10), "pt"),
-      legend.key.height = unit(2, "mm")
+      legend.key.width = unit(5, "mm"),
+      legend.margin = margin(2, 0, 2, 0)
+
   )
 zone2
 mix <- ggarrange(plot_2,                                                 
