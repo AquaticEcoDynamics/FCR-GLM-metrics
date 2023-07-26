@@ -8,7 +8,7 @@ setwd("../FCR-GLM-metrics")
 #Prior ensemble
 obs_0<- read.csv("Uncertainty_analysis/glm3_reweight_ies.0.obs.csv")
 #Posterior ensemble
-obs_3<- read.csv("Uncertainty/analysis/glm3_reweight_ies.3.obs.csv")
+obs_3<- read.csv("Uncertainty_analysis/glm3_reweight_ies.3.obs.csv")
 
 #MOM
 obs_mom <- read.csv("Uncertainty_analysis/model_files/field_data/mom_observed.csv") %>% 
@@ -144,7 +144,8 @@ plot_td_1 <- ggplot2::ggplot(data=arrange_td_prior, aes(x=DateTime, y=value, gro
     panel.spacing = unit(1, "lines"),
     legend.spacing = unit(-4, "pt"),
     legend.key.size = unit(6, 'mm'),
-    legend.position = "right"
+    legend.position = "right",
+    strip.text = element_text(size = 16)
   )
 plot_td_1
 

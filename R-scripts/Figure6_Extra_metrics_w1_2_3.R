@@ -139,8 +139,8 @@ plot_2 <- thermo_depth_model_w1 %>%
     legend.position=c(0.5, 0.92),
     legend.direction="horizontal",
     legend.key.height = unit(2, "mm"),
-    legend.spacing.x = unit(1.5, 'mm')
-    
+    legend.spacing.x = unit(1.5, 'mm'),
+    panel.spacing = unit(1, "lines")
   )
 
 plot_2
@@ -527,7 +527,7 @@ PEST_anoxia<- ggplot() +
   )
 
 PEST_anoxia
-mix1 <- ggarrange(plot_2, SS_plot, PEST_anoxia, plot_MOM, ncol=2, nrow=2, labels=c("a", "b", "c", "d"))
+mix1 <- ggarrange(plot_2, SS_plot, PEST_anoxia, plot_MOM, ncol=2, nrow=2, labels=c("a)", "b)", "c)", "d)"), font.label = list(size = 12, color = "black", face= "plain"))
 mix1
 ggsave("Results/Figure6.png",
        plot = mix1,

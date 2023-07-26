@@ -350,7 +350,7 @@ differencet <- ggplot() +
 differencet
 
 
-mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3, labels=c("a", "b", "c", "d", "e", "f"))
+mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3, labels=c("a)", "b)", "c)", "d)", "e)", "f)"), font.label = list(size = 12, color = "black", face= "plain"))
 mix
 
 ggsave("Results/Figure_S1.png",
@@ -752,10 +752,10 @@ zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="PEST_N wat
   )
 zone2
 mix <- ggarrange(plot_2,                                                 
-                 ggarrange(SS_plot, zone2, ncol=2, labels=c("b", "c")),
-                 ggarrange(PEST_anoxia, plot_MOM, ncol = 2, labels = c("d", "e")), 
+                 ggarrange(SS_plot, zone2, ncol=2, labels=c("b)", "c)"), font.label = list(size = 12, color = "black", face= "plain")),
+                 ggarrange(PEST_anoxia, plot_MOM, ncol = 2, labels = c("d)", "e)"), font.label = list(size = 12, color = "black", face= "plain")), 
                  nrow = 3, 
-                 labels = "a"
+                 labels = "a)", font.label = list(size = 12, color = "black", face= "plain")
 ) 
 mix
 ggsave("Results/Figure_S2.png",
@@ -774,7 +774,6 @@ w1 <- file.path(sim_folder, 'Calibrated_models/Deepm1_exm_weight1/output/output.
 w2 <- file.path(sim_folder, 'Calibrated_models/Deepm1_exm_weight2/output/output.nc')
 #weight 3
 w3 <- file.path(sim_folder, 'Calibrated_models/Deepm1_exm_weight3/output/output.nc')
-error <- read.csv("observations/error_stats.csv")
 
 #oxygen
 var="OXY_oxy"
@@ -1018,8 +1017,8 @@ plot_2 <- thermo_depth_model_w1 %>%
     legend.position=c(0.5, 0.92),
     legend.direction="horizontal",
     legend.key.height = unit(2, "mm"),
-    legend.spacing.x = unit(1.5, 'mm')
-    
+    legend.spacing.x = unit(1.5, 'mm'),
+    panel.spacing = unit(0.6, "lines")
   )
 
 plot_2
@@ -1256,7 +1255,7 @@ oxy_interp_depth <- crossing(
 ) %>%
   group_by(DateTime) %>%
   mutate(Oxy = estimate_oxy_by_date(DateTime[1], Depth))
-#################STOP SECOND RUN HERE, RUN LINE 1274TO LINE 1278  ###########
+#################STOP SECOND RUN HERE, RUN LINE 1272 TO LINE 1278  ###########
 #################STOP THIRD RUN HERE, RUN LINE 1280 ONWARDS ###########
 
 #Model anoxia 
@@ -1333,7 +1332,7 @@ PEST_anoxia<- ggplot() +
   )
 
 PEST_anoxia
-mix1 <- ggarrange(plot_2, SS_plot, PEST_anoxia, plot_MOM, ncol=2, nrow=2, labels=c("a", "b", "c", "d"))
+mix1 <- ggarrange(plot_2, SS_plot, PEST_anoxia, plot_MOM, ncol=2, nrow=2, labels=c("a)", "b)", "c)", "d)"), font.label = list(size = 12, color = "black", face= "plain"))
 mix1
 ggsave("Results/Figure_S4.png",
        plot = mix1,

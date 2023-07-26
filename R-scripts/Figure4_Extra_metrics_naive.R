@@ -481,10 +481,11 @@ zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="PEST_N wat
   )
 zone2
 mix <- ggarrange(plot_2,                                                 
-                 ggarrange(SS_plot, zone2, ncol=2, labels=c("b", "c")),
-                 ggarrange(PEST_anoxia, plot_MOM, ncol = 2, labels = c("d", "e")), 
+                 ggarrange(SS_plot, zone2, ncol=2, labels=c("b)", "c)"), font.label = list(size = 12, color = "black", face= "plain")),
+                 ggarrange(PEST_anoxia, plot_MOM, ncol = 2, labels = c("d)", "e)"), font.label = list(size = 12, color = "black", face= "plain")), 
                  nrow = 3, 
-                 labels = "a"
+                 labels = "a)",
+                 font.label = list(size = 12, color = "black", face= "plain")
 ) 
 mix
 ggsave("Results/Figure4.png",
