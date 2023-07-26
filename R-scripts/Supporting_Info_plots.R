@@ -353,7 +353,7 @@ differencet
 mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3, labels=c("a", "b", "c", "d", "e", "f"))
 mix
 
-ggsave("Results/Figure_B1.png",
+ggsave("Results/Figure_S1.png",
        plot = mix,
        width = 246.2, 
        height = 210, 
@@ -758,7 +758,7 @@ mix <- ggarrange(plot_2,
                  labels = "a"
 ) 
 mix
-ggsave("Results/Figure_B2.png",
+ggsave("Results/Figure_S2.png",
        plot = mix,
        dpi=500,
        width = 246.2, 
@@ -923,7 +923,7 @@ combinedPlot1
 
 final <- ggarrange(combinedPlot1, combinedPlot, ncol=2, nrow=1)
 final
-ggsave("Results/Figure_B3.png",
+ggsave("Results/Figure_S3.png",
        plot = final,
        width = 246.2, 
        height = 210, 
@@ -1335,7 +1335,7 @@ PEST_anoxia<- ggplot() +
 PEST_anoxia
 mix1 <- ggarrange(plot_2, SS_plot, PEST_anoxia, plot_MOM, ncol=2, nrow=2, labels=c("a", "b", "c", "d"))
 mix1
-ggsave("Results/Figure_B4.png",
+ggsave("Results/Figure_S4.png",
        plot = mix1,
        width = 246.2, 
        height = 160, 
