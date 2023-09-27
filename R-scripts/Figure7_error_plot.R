@@ -123,12 +123,12 @@ SS<- ggplot(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
-  xlab("Calibration method")+ 
+  xlab("Model")+ 
   ylim(c(-0.5, 1))+
   theme(
     #legend.background = element_rect(fill="white"),
@@ -161,12 +161,12 @@ TD<- ggplot(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
-  xlab("Calibration method")+ 
+  xlab("Model")+ 
   ylim(c(-0.5, 1))+
   theme(
     #legend.background = element_rect(fill="white"),
@@ -199,12 +199,12 @@ MOM<- ggplot(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibrati
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
-  xlab("Calibration method")+ 
+  xlab("Model")+ 
   ylim(c(-0.5, 1))+
   theme(
     #legend.background = element_rect(fill="white"),
@@ -237,12 +237,12 @@ AF<- ggplot(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
-  xlab("Calibration method")+ 
+  xlab("Model")+ 
   ylim(c(-3.5, 1))+
   theme(
     #legend.background = element_rect(fill="white"),
@@ -275,12 +275,12 @@ temp <- ggplot(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibr
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
-  xlab("Calibration method")+ 
+  xlab("Model")+ 
   ylim(c(-0.5, 1))+
   theme(
     #legend.background = element_rect(fill="white"),
@@ -313,12 +313,12 @@ oxy <- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibrat
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
-  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"))+
+  scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
-                     labels = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"),
+                     labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
                      values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
   ylab("MEF")+
-  xlab("Calibration method")+ 
+  xlab("Model")+ 
   ylim(c(-0.5, 1))+
   theme(
     #legend.background = element_rect(fill="white"),
@@ -340,18 +340,18 @@ oxy <- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibrat
 oxy
 
 #Legend
-legend<- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm1, colour = "Calib_deepm1"), pch=16, size=4)+
+legend<- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm1, colour = "Calibration DM 1"), pch=16, size=4)+
   geom_point()+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2, colour="Calib_deepm2"), pch=15, size=4)+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2, colour="Valid_deepm2"), pch=0, size=4)+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour="Valid_deepm1"), pch=1, size=4)+
-  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2, colour="Calib_ref"), pch=16, size=4)+
-  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm1, colour="Valid_ref"), pch=1, size=4)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2, colour="Calibration DM 2"), pch=15, size=4)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2, colour="Validation DM 2"), pch=0, size=4)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour="Validation DM 1"), pch=1, size=4)+
+  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2, colour="Calibration"), pch=16, size=4)+
+  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm1, colour="Validation"), pch=1, size=4)+
   scale_colour_manual(name="Legend", 
-                      values=c("Calib_ref"="black", "Valid_ref"="black", "Calib_deepm1"="darkorchid2", "Valid_deepm1"="darkorchid2", "Calib_deepm2" = "blue", "Valid_deepm1"="darkorchid2", "Valid_deepm2"="blue"),
+                      values=c("Calibration"="black", "Validation"="black", "Calibration DM 1"="darkorchid2", "Validation DM 1"="darkorchid2", "Calibration DM 2" = "blue", "Validation DM 2"="blue"),
                       guide=guide_legend(nrow=1, override.aes=list(shape=c(16, 1, 16, 1, 15, 0), size=c(2, 2, 2, 2, 2, 2))))+
   theme(
-    legend.text = ggplot2::element_text(size= 8),
+    legend.text = ggplot2::element_text(size= 9),
     legend.title = ggplot2::element_blank(),
     legend.direction = "horizontal",
     legend.position = "top",

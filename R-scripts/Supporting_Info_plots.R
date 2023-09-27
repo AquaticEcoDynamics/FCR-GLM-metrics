@@ -15,7 +15,7 @@ library(patchwork)
 #Set working directory
 setwd(".../FCR-GLM-metrics")
 
-#Figure B1
+#Figure S1
 
 #Modelled oxy
 sim_folder <- getwd()
@@ -359,7 +359,7 @@ ggsave("Results/Figure_S1.png",
        height = 210, 
        units = "mm")
 
-#Figure B2
+#Figure S2
 sim_folder <- getwd()
 PEST_calib <- file.path(sim_folder, 'Calibrated_models/Deepm1_naive/output/output.nc')
 
@@ -433,9 +433,9 @@ merge_ice_new$IceOn_mod[merge_ice_new$IceOn_mod == 1] <- 1
 
 #Combined time series of thermocline depth and ice cover
 plot_2 <- thermo_depth_model %>%
-  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="PEST_N TD", group=year)) +
+  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="Naive TD", group=year)) +
   ggplot2::geom_line()+
-  geom_point(data=merge_ice_new, aes(x=DateTime, y=IceOn_mod, colour="PEST_N ice"), pch=0, size=1.8, stroke=0.5)+
+  geom_point(data=merge_ice_new, aes(x=DateTime, y=IceOn_mod, colour="Naive ice"), pch=0, size=1.8, stroke=0.5)+
   geom_point(data=merge_ice_new, aes(x=DateTime, y=IceOn, colour="Obs. ice"), pch=20, size=1)+
   ggplot2::geom_point(data=obs_TD[-1,], aes(x=DateTime, y=thermo.depth, colour="Obs. TD"), pch=10)+
   ggplot2::labs(x = "Date", y = "Depth (m)")+
@@ -449,7 +449,7 @@ plot_2 <- thermo_depth_model %>%
             xmin = as.Date("2019-11-30"), xmax = as.Date("2020-01-02"), colour='blue', fill='NA') +
   ggplot2::scale_y_reverse(limits = c(6, -0.5), breaks= c(0, 1, 2, 3, 4, 5, 6), labels= c("0", "1", "2", "3", "4", "5", "6"), sec.axis = sec_axis(~./1, name = "Ice cover", breaks=c(0, 1, 2, 3, 4, 5, 6), labels=c(" ", "On ", " ", "", "Off", " ", " ")))+
   ggplot2::scale_x_date(expand=c(0.01,0.01), date_breaks = "6 months")+
-  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "PEST_N TD"="#FF61CC", "PEST_N ice"="skyblue", "Obs. ice"="black"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, NA, NA), size=c(1.5, 0.8, 2, 2), shape=c(10, NA, 0, 20))))+
+  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "Naive TD"="#FF61CC", "Naive ice"="skyblue", "Obs. ice"="black"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, NA, NA), size=c(1.5, 0.8, 2, 2), shape=c(10, NA, 0, 20))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -457,11 +457,12 @@ plot_2 <- thermo_depth_model %>%
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
-    legend.text = ggplot2::element_text(size= 7),
+    legend.text = ggplot2::element_text(size= 8),
     legend.title = ggplot2::element_blank(),
     legend.position=c(0.5, 0.96),
     legend.direction="horizontal",
-    legend.key.height = unit(2, "mm")
+    legend.key.height = unit(2, "mm"),
+    legend.key.width = unit(4, "mm")
   )
 
 plot_2
@@ -490,21 +491,22 @@ SS_plot <- ggplot(data=schmidt_stability_obs, aes(x=datetime, y=schmidt.stabilit
   ylab("Schmidt stability")+
   xlab("Date")+
   ylim(c(0, 70))+
-  geom_line(data=schmidt_stability, aes(x=datetime, y=ss_PEST, colour="PEST_N SS"))+
+  geom_line(data=schmidt_stability, aes(x=datetime, y=ss_PEST, colour="Naive SS"))+
   scale_x_date(expand=c(0.01, 20))+
-  scale_colour_manual(values=c("Obs. SS"="black", "PEST_N SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
+  scale_colour_manual(values=c("Obs. SS"="black", "Naive SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold", size= 10),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7),
+    legend.text = ggplot2::element_text(size= 8),
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
     legend.position = c(0.5, 0.92),
     legend.direction="horizontal",
-    legend.key.height = unit(2, "mm")
+    legend.key.height = unit(2, "mm"),
+    legend.key.width = unit(4, "mm")
   )
 
 SS_plot
@@ -544,26 +546,27 @@ merge_mod$DateTime <- as.Date(merge_mod$DateTime, format="%Y-%m-%d")
 merge_mom <- merge(obs_mom, merge_mod, by="DateTime")
 
 #plot MOM
-plot_MOM <-ggplot(data=merge_mod, aes(x=DateTime, y=deviation, colour="PEST_N MOM"))+
+plot_MOM <-ggplot(data=merge_mod, aes(x=DateTime, y=deviation, colour="Naive MOM"))+
   geom_line()+
   geom_point(data=obs_mom, aes(x=DateTime, y=deviation, colour="Obs. MOM"), pch=10)+
   geom_hline(yintercept=0, lty=3)+
   xlab("Date")+
   ylab(expression(bold(MOM~(mmol/m^{3}))))+
   scale_x_date(expand=c(0.01,0.01))+
-  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "PEST_N MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
+  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "Naive MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1), shape=c(10, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold", size= 10),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7), 
+    legend.text = ggplot2::element_text(size= 8), 
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
     legend.position = c(0.35, 0.92),
     legend.direction="horizontal",
     plot.margin = unit(c(5.5,10,5.5,5.5), "pt"),
+    legend.key.width = unit(4, "mm"),
     legend.key.height = unit(2, "mm")
     
   )
@@ -674,13 +677,13 @@ PEST_anoxia<- ggplot() +
   theme(plot.title = element_text(hjust = 0.5))+
   scale_y_reverse(expand=c(0,0)) +
   scale_x_date(expand=c(0,0))+
-  geom_point(filter(obs_anoxia, obs_anoxia$OXY_oxy==1), mapping = aes(x = DateTime, y = Depth, colour = "Observed anoxia"), pch=4)+
+  geom_point(filter(obs_anoxia, obs_anoxia$OXY_oxy==1), mapping = aes(x = DateTime, y = Depth, colour = "Obs. anoxia"), pch=4)+
   scale_fill_manual(
     labels = c("Anoxic water (DO <=1mg/L)", "'Oxic' water (DO>1mg/L)"),
     values = c("1"="#F8766D","0"="blue")
   )+
   scale_colour_manual(
-    values = c("Observed anoxia"="black")
+    values = c("Obs. anoxia"="black")
   ) +
   guides(fill = guide_legend(order = 1)) +
   theme(
@@ -689,7 +692,7 @@ PEST_anoxia<- ggplot() +
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold",size= 10),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7), 
+    legend.text = ggplot2::element_text(size= 8), 
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
@@ -727,28 +730,29 @@ for(i in 1:nrow(temp_z2)){
 }
 temp_z2$DateTime <- as.Date(temp_z2$DateTime, format="%Y-%m-%d")
 
-zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="PEST_N water temp 5 m"))+
+zone2<- ggplot(data=temp_z2, aes(x=DateTime, y=water_temp_z2, colour="Naive water temp 5 m"))+
   geom_line()+
-  geom_line(aes(x=DateTime, y=sed_temp_z2, colour="PEST_N sed temp z2"))+
+  geom_line(aes(x=DateTime, y=sed_temp_z2, colour="Naive sed temp z2"))+
   geom_point(data=filter(obs_temp, Depth==5), aes(x=DateTime, y=temp, colour="Obs. water temp 5 m"), pch=10)+
   labs(x = "Date", y = "Temperature (°C)")+
   scale_x_date(expand=c(0.01,0.01))+
   ylim(c(0, 30))+
-  scale_colour_manual(name="Legend", values=c("Obs. water temp 5 m"="black", "PEST_N water temp 5 m" ="black", "PEST_N sed temp z2"="green"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 1), shape=c(10, NA, NA))))+
+  scale_colour_manual(name="Legend", values=c("Obs. water temp 5 m"="black", "Naive water temp 5 m" ="black", "Naive sed temp z2"="green"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 1), shape=c(10, NA, NA))))+
   theme_light() +
   theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold", size= 10, margin = margin(t = 0, r = 10, b = 0, l = 0)),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7),
+    legend.text = ggplot2::element_text(size= 8),
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
     legend.position= c(0.49, 0.92),
     legend.direction="horizontal",
     plot.margin = unit(c(5.5,10,5.5,10), "pt"),
-    legend.key.width = unit(5, "mm"),
+    legend.key.width = unit(4, "mm"),
     legend.margin = margin(2, 0, 2, 0)
+    
   )
 zone2
 mix <- ggarrange(plot_2,                                                 
@@ -765,7 +769,7 @@ ggsave("Results/Figure_S2.png",
        height = 210, 
        units = "mm")
 
-#Figure B3
+#Figure S3
 
 sim_folder <- getwd()
 #weight 1
@@ -816,16 +820,16 @@ for(i in 1:length(plot_depths)){
   
   plot[[i]] <- oxygen %>%
     filter(Depth == plot_depths[i]) %>%
-    ggplot2::ggplot(ggplot2::aes(x = DateTime, y = obsoxy, colour="Obs. oxy")) +
+    ggplot2::ggplot(ggplot2::aes(x = DateTime, y = obsoxy, colour="Obs. DO")) +
     ggplot2::geom_point(pch=10)+
-    geom_line(data=filter(oxy_w1, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="PEST_w1 oxy"), lty=1, size=0.5)+
-    geom_line(data=filter(oxy_w2, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="PEST_w2 oxy"), lty=2, size=0.5)+
-    geom_line(data=filter(oxy_w3, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="PEST_w3 oxy"), lty=3, size=0.8)+
+    geom_line(data=filter(oxy_w1, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="Model w1 DO"), lty=1, size=0.5)+
+    geom_line(data=filter(oxy_w2, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="Model w2 DO"), lty=2, size=0.5)+
+    geom_line(data=filter(oxy_w3, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="Model w3 DO"), lty=3, size=0.8)+
     ggplot2::ggtitle(" ", subtitle=" ")+
     xlab("Date")+
     ylab(expression(bold(Oxygen~(mmol/m^{3}))))+
     ylim(c(0, 420))+
-    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. oxy"="black", "PEST_w1 oxy"="#00BA38", "PEST_w2 oxy"="#00BA38", "PEST_w3 oxy"="#00BA38"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. DO"="black", "Model w1 DO"="#00BA38", "Model w2 DO"="#00BA38", "Model w3 DO"="#00BA38"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
     ggplot2::theme_light() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -891,14 +895,14 @@ for(i in 1:length(plot_depths)){
     filter(Depth == plot_depths[i]) %>%
     ggplot2::ggplot(ggplot2::aes(x = DateTime, y = obtemp, colour="Obs. temp")) +
     ggplot2::geom_point(pch=10)+
-    geom_line(data=filter(temp_w1, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="PEST_w1 temp"), lty=1, size=0.5)+
-    geom_line(data=filter(temp_w2, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="PEST_w2 temp"), lty=2, size=0.5)+
-    geom_line(data=filter(temp_w3, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="PEST_w3 temp"), lty=3, size=0.8)+
+    geom_line(data=filter(temp_w1, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="Model w1 temp"), lty=1, size=0.5)+
+    geom_line(data=filter(temp_w2, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="Model w2 temp"), lty=2, size=0.5)+
+    geom_line(data=filter(temp_w3, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="Model w3 temp"), lty=3, size=0.8)+
     xlab("Date")+
     ylab("Temperature (°C)")+
     ylim(c(0, 30))+
     ggplot2::ggtitle(title[i], subtitle=depth[i])+
-    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. temp"="black", "PEST_w1 temp"="#619CFF", "PEST_w2 temp"="#619CFF", "PEST_w3 temp"="#619CFF"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. temp"="black", "Model w1 temp"="#619CFF", "Model w2 temp"="#619CFF", "Model w3 temp"="#619CFF"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
     ggplot2::theme_light() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -928,7 +932,7 @@ ggsave("Results/Figure_S3.png",
        height = 210, 
        units = "mm")
 
-#Figure B4
+#Figure S4
 sim_folder <- getwd()
 #weight 1
 w1 <- file.path(sim_folder, 'Calibrated_models/Deepm1_exm_weight1/output/output.nc')
@@ -995,15 +999,15 @@ thermo_depth_model_w3 <- ts.thermo.depth(temp_w3, Smin = 0.1, na.rm=TRUE, season
 thermo_depth_model_w3$DateTime <- as.Date(thermo_depth_model_w3$DateTime, format="%Y-%m-%d")
 
 plot_2 <- thermo_depth_model_w1 %>%
-  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="PEST_w1 TD", group=year), lty=1, size=0.5) +
+  ggplot2::ggplot(ggplot2::aes(x = DateTime, y = td_model, colour="Model w1 TD", group=year), lty=1, size=0.5) +
   ggplot2::geom_line()+
-  ggplot2::geom_line(data=thermo_depth_model_w2, aes(x = DateTime, y = td_model, colour="PEST_w2 TD", group=year), lty=2, size=0.5)+
+  ggplot2::geom_line(data=thermo_depth_model_w2, aes(x = DateTime, y = td_model, colour="Model w2 TD", group=year), lty=2, size=0.5)+
   facet_wrap(~ year, nrow = 1, scales = "free_x")+
-  ggplot2::geom_line(data=thermo_depth_model_w3, aes(x = DateTime, y = td_model, colour="PEST_w3 TD", group=year), lty=3, size=0.8)+
+  ggplot2::geom_line(data=thermo_depth_model_w3, aes(x = DateTime, y = td_model, colour="Model w3 TD", group=year), lty=3, size=0.8)+
   ggplot2::geom_point(data=obs_TD[-1,], aes(x=DateTime, y=thermo.depth, colour="Obs. TD"), pch=10)+
   ggplot2::labs(x = "Date", y = "Depth (m)")+
   ggplot2::scale_y_reverse(limits = c(6, -0.5), breaks= c(0, 1, 2, 3, 4, 5, 6), labels= c("0", "1", "2", "3", "4", "5", "6"))+
-  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "PEST_w1 TD"="#FF61CC", "PEST_w2 TD"="#FF61CC", "PEST_w3 TD"="#FF61CC"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+  ggplot2::scale_colour_manual(name="", values=c("Obs. TD"="black", "Model w1 TD"="#FF61CC", "Model w2 TD"="#FF61CC", "Model w3 TD"="#FF61CC"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 10),
@@ -1011,12 +1015,13 @@ plot_2 <- thermo_depth_model_w1 %>%
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
-    legend.text = ggplot2::element_text(size= 7),
+    legend.text = ggplot2::element_text(size= 8),
     legend.title = ggplot2::element_blank(),
     strip.text = element_text(size = 12),
     legend.position=c(0.5, 0.92),
     legend.direction="horizontal",
     legend.key.height = unit(2, "mm"),
+    legend.key.width = unit(4, "mm"),
     legend.spacing.x = unit(1.5, 'mm'),
     panel.spacing = unit(0.6, "lines")
   )
@@ -1056,23 +1061,24 @@ SS_plot <- ggplot(data=schmidt_stability_obs, aes(x=datetime, y=schmidt.stabilit
   ylab("Schmidt stability")+
   xlab("Date")+
   ylim(c(0, 70))+
-  geom_line(data=schmidt_stability_w1, aes(x=datetime, y=ss_w1, colour="PEST_w1 SS"), lty=1, size=0.5)+
-  geom_line(data=schmidt_stability_w2, aes(x=datetime, y=ss_w2, colour="PEST_w2 SS"), lty=2, size=0.5)+
-  geom_line(data=schmidt_stability_w3, aes(x=datetime, y=ss_w3, colour="PEST_w3 SS"), lty=3, size=0.8)+
+  geom_line(data=schmidt_stability_w1, aes(x=datetime, y=ss_w1, colour="Model w1 SS"), lty=1, size=0.5)+
+  geom_line(data=schmidt_stability_w2, aes(x=datetime, y=ss_w2, colour="Model w2 SS"), lty=2, size=0.5)+
+  geom_line(data=schmidt_stability_w3, aes(x=datetime, y=ss_w3, colour="Model w3 SS"), lty=3, size=0.8)+
   scale_x_date(expand=c(0.01,0.01))+
-  scale_colour_manual(values=c("Obs. SS"="black", "PEST_w1 SS" ="#00BFC4", "PEST_w2 SS" ="#00BFC4", "PEST_w3 SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+  scale_colour_manual(values=c("Obs. SS"="black", "Model w1 SS" ="#00BFC4", "Model w2 SS" ="#00BFC4", "Model w3 SS" ="#00BFC4"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold", size= 10, margin = margin(t = 0, r = 10, b = 0, l = 0)),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7),
+    legend.text = ggplot2::element_text(size= 8),
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
     legend.position = c(0.5, 0.92),
     legend.direction="horizontal",
     plot.margin = unit(c(5.5,10,5.5,10), "pt"),
+    legend.key.width = unit(4, "mm"),
     legend.key.height = unit(2, "mm"),
     legend.spacing.x = unit(1.5, 'mm')
     
@@ -1143,23 +1149,23 @@ merge_w1$DateTime <- as.Date(merge_w1$DateTime, format="%Y-%m-%d")
 merge_w2$DateTime <- as.Date(merge_w2$DateTime, format="%Y-%m-%d")
 merge_w3$DateTime <- as.Date(merge_w3$DateTime, format="%Y-%m-%d")
 
-plot_MOM <-ggplot(data=merge_w1, aes(x=DateTime, y=deviation, colour="PEST_w1 MOM"))+
+plot_MOM <-ggplot(data=merge_w1, aes(x=DateTime, y=deviation, colour="Model w1 MOM"))+
   geom_line(lty=1, size=0.5)+
-  geom_line(data=merge_w2, aes(x=DateTime, y=deviation, colour="PEST_w2 MOM"), lty=2, size=0.5)+
-  geom_line(data=merge_w3, aes(x=DateTime, y=deviation, colour="PEST_w3 MOM"), lty=3, size=0.8)+
+  geom_line(data=merge_w2, aes(x=DateTime, y=deviation, colour="Model w2 MOM"), lty=2, size=0.5)+
+  geom_line(data=merge_w3, aes(x=DateTime, y=deviation, colour="Model w3 MOM"), lty=3, size=0.8)+
   geom_point(data=obs_mom, aes(x=DateTime, y=deviation, colour="Obs. MOM"), pch=10)+
   geom_hline(yintercept=0, lty=3)+
   xlab("Date")+
   ylim(c(-250, 250))+
   ylab(expression(bold(MOM~(mmol/m^{3}))))+
   scale_x_date(expand=c(0.01,0.01))+
-  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "PEST_w1 MOM" ="#CD9600", "PEST_w2 MOM" ="#CD9600", "PEST_w3 MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+  ggplot2::scale_colour_manual(name="Legend", values=c("Obs. MOM"="black", "Model w1 MOM" ="#CD9600", "Model w2 MOM" ="#CD9600", "Model w3 MOM" ="#CD9600"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
   ggplot2::theme_light() +
   ggplot2::theme(
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold", size= 10),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7), 
+    legend.text = ggplot2::element_text(size= 8), 
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
@@ -1167,9 +1173,9 @@ plot_MOM <-ggplot(data=merge_w1, aes(x=DateTime, y=deviation, colour="PEST_w1 MO
     legend.direction="horizontal",
     plot.margin = unit(c(5.5,10,5.5,5.5), "pt"),
     legend.key.height = unit(2, "mm"),
+    legend.key.width = unit(4, "mm"),
     legend.spacing.x = unit(1.5, 'mm'),
-    legend.margin=margin(2, 2, 2, 2)
-    
+    legend.margin = margin(2, 2, 2, 2)
   )
 plot_MOM
 
@@ -1255,8 +1261,8 @@ oxy_interp_depth <- crossing(
 ) %>%
   group_by(DateTime) %>%
   mutate(Oxy = estimate_oxy_by_date(DateTime[1], Depth))
-#################STOP SECOND RUN HERE, RUN LINE 1272 TO LINE 1278  ###########
-#################STOP THIRD RUN HERE, RUN LINE 1280 ONWARDS ###########
+#################STOP SECOND RUN HERE, RUN LINE 1280 TO LINE 1284  ###########
+#################STOP THIRD RUN HERE, RUN LINE 1286 ONWARDS ###########
 
 #Model anoxia 
 anoxia <- oxy_interp_depth
@@ -1267,7 +1273,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #model weight 2 
 output <- nc_open('Calibrated_models/Deepm1_exm_weight2/output/output.nc')
-#####END OF FIRST RUN, START SECOND RUN FROM LINE 1182, RUN IT UNTIL LINE 1257 #########
+#####END OF FIRST RUN, START SECOND RUN FROM LINE 1188, RUN IT UNTIL LINE 1263 #########
 
 # Only second run (Model 2)
 
@@ -1275,7 +1281,7 @@ anoxia$Oxy1 <- oxy_interp_depth$Oxy
 anoxia$Oxy1 <- anoxia$Oxy1 * 32/1000
 anoxia$Oxy1<- ifelse(anoxia$Oxy1<=1, 1, 0)
 output <- nc_open('Calibrated_models/Deepm1_exm_weight3/output/output.nc')
-#####END OF SECOND RUN, START THIRD RUN FROM LINE 1182, RUN UNTIL LINE 1257 #########
+#####END OF SECOND RUN, START THIRD RUN FROM LINE 1188, RUN UNTIL LINE 1263 #########
 
 # Only third run (Model 3)
 anoxia$Oxy2 <- oxy_interp_depth$Oxy
@@ -1304,13 +1310,13 @@ PEST_anoxia<- ggplot() +
   theme(plot.title = element_text(hjust = 0.5))+
   scale_y_reverse(expand=c(0,0)) +
   scale_x_date(expand=c(0,0))+
-  geom_point(filter(obs_anoxia, obs_anoxia$OXY_oxy==1), mapping = aes(x = DateTime, y = Depth, colour = "Observed anoxia"), pch=4)+
+  geom_point(filter(obs_anoxia, obs_anoxia$OXY_oxy==1), mapping = aes(x = DateTime, y = Depth, colour = "Obs. anoxia"), pch=4)+
   scale_fill_manual(
     labels = c("3 models", "2 models", "1 model", "0 models"),
     values = c("3"="red", "2"="#F8766D", "1"= "bisque", "0"="blue")
   )+
   scale_colour_manual(
-    values = c("Observed anoxia"="black")
+    values = c("Obs. anoxia"="black")
   ) +
   guides(fill = guide_legend(order = 1)) +
   theme(
@@ -1319,7 +1325,7 @@ PEST_anoxia<- ggplot() +
     plot.title = ggplot2::element_text(face= "bold", size = 12),
     axis.title.y = ggplot2::element_text(face="bold",size= 10),
     axis.title.x = ggplot2::element_text(face="bold", size= 10),
-    legend.text = ggplot2::element_text(size= 7), 
+    legend.text = ggplot2::element_text(size= 8), 
     axis.text.x = ggplot2::element_text(size=9),
     axis.text.y = ggplot2::element_text(size=9),
     legend.title = ggplot2::element_blank(),
@@ -1327,7 +1333,7 @@ PEST_anoxia<- ggplot() +
     legend.direction="horizontal",
     legend.box = "horizontal",
     legend.key.size = unit(3, 'mm'),
-    legend.key.height = unit(2, "mm")
+    legend.key.height = unit(2, "mm")#change legend key size
     
   )
 

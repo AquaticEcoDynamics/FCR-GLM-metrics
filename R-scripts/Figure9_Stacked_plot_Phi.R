@@ -38,7 +38,7 @@ new_data_n <- aggregate(Phi ~  factor(New_obs_group1, levels=reorder) + Iteratio
 colnames(new_data_n) <- c("New_obs_group", "Iteration", "Phi")
 r<- ggplot(new_data_n, aes(x=Iteration, y=Phi, fill=New_obs_group)) + 
   geom_area(size=0.1, colour="black")+
-  ggtitle("Deep mixing 2 Naive") +
+  ggtitle("Naive model") +
   ylim(c(0, 4000))+
   scale_fill_manual(
     name="Legend",
@@ -58,6 +58,8 @@ r<- ggplot(new_data_n, aes(x=Iteration, y=Phi, fill=New_obs_group)) +
         legend.key.width=unit(3,"mm"))
 r
 
+
+
 #Weight 1, deep mixing 2 model
 error_w1 <- read.csv("Calibrated_models/Deepm2_exm_weight1/glm3.csv")
 error_w1_1 <- subset(error_w1, select = c(1:5))
@@ -70,21 +72,23 @@ new <- cbind(iteration, melted)
 new1 <- new[order(iteration),]  
 colnames(new1) <- c("Iteration", "Obs_group" ,"Phi")
 
-New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10), "TD", "SS", "MOM", "AF")
+New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10), "TD", "SS", "MOM", "NAL")
 New_obs_group1 <- rep(New_obs_group, max(error_w1_1$iteration)+1)
 final_w1 <- cbind(new1, New_obs_group1)
 
-reorder <- c("Oxy", "Temp", "AF", "MOM", "SS", "TD")
+reorder <- c("Oxy", "Temp", "NAL", "MOM", "SS", "TD")
 new_data_w1 <- aggregate(Phi ~  factor(New_obs_group1, levels=reorder) + Iteration, data=final_w1, sum)
 colnames(new_data_w1) <- c("New_obs_group", "Iteration", "Phi")
 w1<- ggplot(new_data_w1, aes(x=Iteration, y=Phi, fill=New_obs_group)) + 
   geom_area(size=0.1, colour="black")+
-  ggtitle("Deep mixing 2 w1") +
+  ggtitle("System-inspired model w1") +
   ylim(c(0, 4000))+
   scale_fill_manual(
     name="Legend",
-    values = c("Temp"="#619CFF", "Oxy"="#00BA38", "TD"="#FF61CC", "SS"="#00BFC4", "MOM"="#CD9600", "AF"="#F8766D"),
-    guide=guide_legend(nrow=1)
+    values = c("Temp"="#619CFF", "Oxy"="#00BA38", "TD"="#FF61CC", "SS"="#00BFC4", "MOM"="#CD9600", "NAL"="#F8766D"),
+    guide=guide_legend(nrow=1),
+    labels = c("temperature", "oxygen", "thermocline depth", "Schmid stabiliy", "metalimnetic oxygen minima", "number of anoxic layers")
+    
   )+
   ggplot2::theme_light() +
   theme(plot.title = element_text(hjust = 0, size=12, face="bold"),
@@ -115,7 +119,7 @@ new <- cbind(iteration, melted)
 new1 <- new[order(iteration),]  
 colnames(new1) <- c("Iteration", "Obs_group" ,"Phi")
 
-New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10), "TD", "SS", "MOM", "AF")
+New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10), "TD", "SS", "MOM", "NAL")
 New_obs_group1 <- rep(New_obs_group, max(error_w2_1$iteration)+1)
 
 final_w2 <- cbind(new1, New_obs_group1)
@@ -124,16 +128,16 @@ ggplot(final_w2, aes(x=Iteration, y=Phi, fill=Obs_group)) +
   geom_area(size=0.1, colour="black")+
   ggtitle("Deep mixing 2 w2")
 
-reorder <- c("Oxy", "Temp", "AF", "MOM", "SS", "TD")
+reorder <- c("Oxy", "Temp", "NAL", "MOM", "SS", "TD")
 new_data_w2 <- aggregate(Phi ~  factor(New_obs_group1, levels=reorder) + Iteration, data=final_w2, sum)
 colnames(new_data_w2) <- c("New_obs_group", "Iteration", "Phi")
 w2<- ggplot(new_data_w2, aes(x=Iteration, y=Phi, fill=New_obs_group)) + 
   geom_area(size=0.1, colour="black")+
-  ggtitle("Deep mixing 2 w2") +
+  ggtitle("System-inspired model w2") +
   ylim(c(0, 4000))+
   scale_fill_manual(
     name="Legend",
-    values = c("Temp"="#619CFF", "Oxy"="#00BA38", "TD"="#FF61CC", "SS"="#00BFC4", "MOM"="#CD9600", "AF"="#F8766D"),
+    values = c("Temp"="#619CFF", "Oxy"="#00BA38", "TD"="#FF61CC", "SS"="#00BFC4", "MOM"="#CD9600", "NAL"="#F8766D"),
     guide=guide_legend(nrow=1)
   )+
   ggplot2::theme_light() +
@@ -163,22 +167,22 @@ new <- cbind(iteration, melted)
 new1 <- new[order(iteration),]  
 colnames(new1) <- c("Iteration", "Obs_group" ,"Phi")
 
-New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10), "TD", "SS", "MOM", "AF")
+New_obs_group <- c(rep("Temp", times=10), rep("Oxy", times=10), "TD", "SS", "MOM", "NAL")
 New_obs_group1 <- rep(New_obs_group, max(error_w3_1$iteration)+1)
 
 final_w3 <- cbind(new1, New_obs_group1)
 
-reorder <- c("Oxy", "Temp", "AF", "MOM", "SS", "TD")
+reorder <- c("Oxy", "Temp", "NAL", "MOM", "SS", "TD")
 new_data_w3 <- aggregate(Phi ~  factor(New_obs_group1, levels=reorder) + Iteration, data=final_w3, sum)
 colnames(new_data_w3) <- c("New_obs_group", "Iteration", "Phi")
 
 w3<- ggplot(new_data_w3, aes(x=Iteration, y=Phi, fill=New_obs_group)) + 
   geom_area(size=0.1, colour="black")+
-  ggtitle("Deep mixing 2 w3") +
+  ggtitle("System-inspired model w3") +
   #ylim(c(0, 9000))+
   scale_fill_manual(
     name="Legend",
-    values = c("Temp"="#619CFF", "Oxy"="#00BA38", "TD"="#FF61CC", "SS"="#00BFC4", "MOM"="#CD9600", "AF"="#F8766D"),
+    values = c("Temp"="#619CFF", "Oxy"="#00BA38", "TD"="#FF61CC", "SS"="#00BFC4", "MOM"="#CD9600", "NAL"="#F8766D"),
     guide=guide_legend(nrow=1)
   )+
   ggplot2::theme_light() +
@@ -195,7 +199,7 @@ w3<- ggplot(new_data_w3, aes(x=Iteration, y=Phi, fill=New_obs_group)) +
         legend.key.width=unit(3,"mm"))
 w3
 
-stacked<- ggarrange(r, w1, w2, w3, ncol=2, nrow=2, common.legend=TRUE, legend.grob=w1_legend)
+stacked<- ggarrange(r, w1, w2, w3, ncol=2, nrow=2, legend.grob=w1_legend)
 stacked
 
 ggsave("Results/Figure9.png",

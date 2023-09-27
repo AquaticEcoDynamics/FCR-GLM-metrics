@@ -344,7 +344,7 @@ differencet <- ggplot() +
 differencet
   
 
-mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3, labels=c("a", "b", "c", "d", "e", "f"))
+mix <- ggarrange(modelledt, modelled, observedt, observed, differencet, difference, ncol=2, nrow=3, labels=c("a)", "b)", "c)", "d)", "e)", "f)"), font.label = list(size = 12, color = "black", face= "plain"))
 mix
 
 ggsave("Results/Figure3.png",

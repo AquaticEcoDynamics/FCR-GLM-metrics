@@ -96,16 +96,16 @@ for(i in 1:length(plot_depths)){
   
   plot[[i]] <- oxygen %>%
     filter(Depth == plot_depths[i]) %>%
-    ggplot2::ggplot(ggplot2::aes(x = DateTime, y = obsoxy, colour="Obs. oxy")) +
+    ggplot2::ggplot(ggplot2::aes(x = DateTime, y = obsoxy, colour="Obs. DO")) +
     ggplot2::geom_point(pch=10)+
-    geom_line(data=filter(oxy_w1, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="PEST_w1 oxy"), lty=1, size=0.5)+
-    geom_line(data=filter(oxy_w2, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="PEST_w2 oxy"), lty=2, size=0.5)+
-    geom_line(data=filter(oxy_w3, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="PEST_w3 oxy"), lty=3, size=0.8)+
+    geom_line(data=filter(oxy_w1, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="Model w1 DO"), lty=1, size=0.5)+
+    geom_line(data=filter(oxy_w2, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="Model w2 DO"), lty=2, size=0.5)+
+    geom_line(data=filter(oxy_w3, Depth==plot_depths[i]), aes(x=DateTime, y=OXY_oxy, colour="Model w3 DO"), lty=3, size=0.8)+
     ggplot2::ggtitle(" ", subtitle=" ")+
     xlab("Date")+
     ylab(expression(bold(Oxygen~(mmol/m^{3}))))+
     ylim(c(0, 420))+
-    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. oxy"="black", "PEST_w1 oxy"="#00BA38", "PEST_w2 oxy"="#00BA38", "PEST_w3 oxy"="#00BA38"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. DO"="black", "Model w1 DO"="#00BA38", "Model w2 DO"="#00BA38", "Model w3 DO"="#00BA38"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
     ggplot2::theme_light() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(face= "bold", size = 12),
@@ -200,14 +200,14 @@ for(i in 1:length(plot_depths)){
     filter(Depth == plot_depths[i]) %>%
     ggplot2::ggplot(ggplot2::aes(x = DateTime, y = obtemp, colour="Obs. temp")) +
     ggplot2::geom_point(pch=10)+
-    geom_line(data=filter(temp_w1, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="PEST_w1 temp"), lty=1, size=0.5)+
-    geom_line(data=filter(temp_w2, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="PEST_w2 temp"), lty=2, size=0.5)+
-    geom_line(data=filter(temp_w3, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="PEST_w3 temp"), lty=3, size=0.8)+
+    geom_line(data=filter(temp_w1, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="Model w1 temp"), lty=1, size=0.5)+
+    geom_line(data=filter(temp_w2, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="Model w2 temp"), lty=2, size=0.5)+
+    geom_line(data=filter(temp_w3, Depth==plot_depths[i]), aes(x=DateTime, y=temp, colour="Model w3 temp"), lty=3, size=0.8)+
     xlab("Date")+
     ylab("Temperature (°C)")+
     ylim(c(0, 30))+
     ggplot2::ggtitle(title[i], subtitle=depth[i])+
-    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. temp"="black", "PEST_w1 temp"="#619CFF", "PEST_w2 temp"="#619CFF", "PEST_w3 temp"="#619CFF"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
+    ggplot2::scale_colour_manual(name="Legend", values=c("Obs. temp"="black", "Model w1 temp"="#619CFF", "Model w2 temp"="#619CFF", "Model w3 temp"="#619CFF"), guide=guide_legend(override.aes=list(linetype=c(NA, 1, 2, 3), shape=c(10, NA, NA, NA))))+
     ggplot2::theme_light() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(face= "bold", size = 12),

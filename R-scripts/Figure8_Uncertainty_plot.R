@@ -149,7 +149,7 @@ plot_td_1 <- ggplot2::ggplot(data=arrange_td_prior, aes(x=DateTime, y=value, gro
   )
 plot_td_1
 
-combined_mom_td <- ggpubr::ggarrange(plot_td_1, plot1, ncol=1, nrow=2, common.legend=TRUE, legend="right")
+combined_mom_td <- ggpubr::ggarrange(plot_td_1, plot1, ncol=1, nrow=2, common.legend=TRUE, legend="right", labels=c("a)", "b)"), font.label = list(color = "black", face= "plain"))
 combined_mom_td
 
 ggsave("Results/Figure8.png",
