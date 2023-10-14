@@ -1,0 +1,27 @@
+time,elapsed_seconds,message
+2023-06-13 09:05:10,1.905e-05,PEST++ performance logger started
+2023-06-13 09:05:10,9.9701e-05,starting to process control file
+2023-06-13 09:05:10,0.0091442,finished processing control file
+2023-06-13 09:05:10,0.0137538,starting basic model IO error checking
+2023-06-13 09:05:10,0.0522219,finished basic model IO error checking
+2023-06-13 09:05:10,5.3711e-05,loading parcov
+2023-06-13 09:05:10,0.00620493,commencing to build jacobian parameter sets
+2023-06-13 09:05:10,0.00666479,jacobian parameter sets built, commencing model runs
+2023-06-13 09:22:56,1065.37,jacobian runs complete, processing runs
+2023-06-13 09:22:56,0.0265147,processing jacobian runs complete
+2023-06-13 09:22:56,2.615e-05,saving jacobian and sen files
+2023-06-13 09:22:56,0.085415,FOSM-based posterior unc calcs
+2023-06-13 09:22:56,0.000689433,starting FOSM uncertainty analyses for iteration -999
+2023-06-13 09:22:56,0.00899878,loading obscov
+2023-06-13 09:22:56,0.000651574,loading parcov
+2023-06-13 09:22:56,9.2977e-05,set_predictions
+2023-06-13 09:22:56,0.000618334,parameter fosm calcs
+2023-06-13 09:22:56,4.89e-06,LinearAnalysis::calc_posterior
+2023-06-13 09:22:56,3.04e-06,LinearAnalysis::align
+2023-06-13 09:22:56,0.00320483,LinearAnalysis::prior_prediction_variance()::invert obscov
+2023-06-13 09:22:56,5.13e-06,inverting diagonal matrix in place
+2023-06-13 09:22:56,4.6669e-05,LinearAnalysis::calc_posterior() form JtQJ
+2023-06-13 09:22:56,0.00410077,LinearAnalysis::calc_posterior() invert prior parcov
+2023-06-13 09:22:56,1.6579e-05,LinearAnalysis::calc_posterior() form posterior parcov
+2023-06-13 09:22:56,8.67e-06,LinearAnalysis::calc_posterior() invert posterior parcov
+2023-06-13 09:22:56,2.9e-06,inverting non-diagonal matrix in place
