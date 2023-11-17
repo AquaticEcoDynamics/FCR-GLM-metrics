@@ -1,3 +1,9 @@
+[![Project Status: Active – The project is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![FCR](https://img.shields.io/badge/FCR-3.3-brightgreen)](https://github.com/AquaticEcoDynamics/FCR-GLMv3.3)
+[![GLM](https://img.shields.io/badge/GLM-3.3-yellow)](https://github.com/AquaticEcoDynamics/glm-aed/tree/main)
+[![AED](https://img.shields.io/badge/AED-2.2.2-orange)](https://aquaticecodynamics.github.io/aed-science/)
+[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+
 # FCR-GLM-metrics
 FCR-GLMv3.3 GLM-AED simulation calibrated with PEST.
 
