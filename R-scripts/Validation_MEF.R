@@ -16,11 +16,11 @@ library(patchwork)
 #Deep mixing 2
 setwd(".../FCR-GLM-metrics")
 sim_folder <- getwd()
-error <- read.csv('observations/error_stats.csv')
+error <- read.csv('Observations/error_stats.csv')
 
 #oxygen
 var="OXY_oxy"
-obs_oxy<-read.csv('observations/CleanedObsOxy.csv') %>%
+obs_oxy<-read.csv('Observations/CleanedObsOxy.csv') %>%
   mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST"))) 
 obs_oxy$DateTime <- as.Date(obs_oxy$DateTime, format="%Y-%m-%d")
 
@@ -113,7 +113,7 @@ error[error$metric=="oxy" & error$calibration=="PEST_exm_w3", "Validation.deepm2
 
 #Temperature
 var="temp"
-obs_temp<-read.csv('observations/CleanedObsTemp.csv') %>%
+obs_temp<-read.csv('Observations/CleanedObsTemp.csv') %>%
   mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST"))) 
 obs_temp$DateTime <- as.Date(obs_temp$DateTime, format="%Y-%m-%d")
 
@@ -201,7 +201,8 @@ error[error$metric=="temp" & error$calibration=="PEST_exm_w3", "Validation.deepm
 
 #TD
 #Observed thermocline deph
-obs_TD<- read.csv('observations/obs_td.csv') %>%
+obs_TD<- read.csv('Observations/obs_td.csv') %>%
+  mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d")) %>%
   mutate(month = lubridate::month(DateTime)) %>%
   filter(between(month, 4, 9)) %>%
   mutate(year = lubridate::year(DateTime)) %>%
@@ -214,7 +215,8 @@ obs_TD$DateTime <- as.Date(obs_TD$DateTime, format="%Y-%m-%d")
 bathy <- read.csv('observations/bathymetry.csv')
 
 #Schmidt stability observed
-schmidt_stability_obs<- read.csv("observations/Obs_SS.csv") %>%
+schmidt_stability_obs<- read.csv("Observations/Obs_SS.csv") %>%
+  mutate(datetime = as.Date(datetime, format = "%Y-%m-%d")) %>%
   filter(datetime > "2015-07-19" & datetime < "2016-12-02")
 schmidt_stability_obs$datetime<- as.Date(schmidt_stability_obs$datetime, format='%Y-%m-%d')
 
@@ -621,8 +623,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
-ID <- seq.int(1:502)
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
+ID <- seq.int(1:500)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -657,7 +659,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -743,7 +745,7 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
 ID <- seq.int(1:502)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
@@ -779,7 +781,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -864,7 +866,7 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
 ID <- seq.int(1:502)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
@@ -900,7 +902,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -985,7 +987,7 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
 ID <- seq.int(1:502)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
@@ -1021,7 +1023,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -1055,17 +1057,17 @@ for (i in 1:nrow(merge_anoxia)) {
 #Deepm2 exm w3
 error[error$metric=="A" & error$calibration=="PEST_exm_w3", "Validation.deepm2"] <- MEFF_anoxia
 
-#write.csv(error, 'observations/error_stats.csv', row.names=FALSE)
+write.csv(error, 'Observations/error_stats.csv', row.names=FALSE)
 
 #############################################################################################################################
 #Deep mixing 1
 setwd(".../FCR-GLM-metrics")
 sim_folder <- getwd()
-error <- read.csv('observations/error_stats.csv')
+error <- read.csv('Observations/error_stats.csv')
 
 #oxygen
 var="OXY_oxy"
-obs_oxy<-read.csv('observations/CleanedObsOxy.csv') %>%
+obs_oxy<-read.csv('Observations/CleanedObsOxy.csv') %>%
   mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST"))) 
 obs_oxy$DateTime <- as.Date(obs_oxy$DateTime, format="%Y-%m-%d")
 
@@ -1158,7 +1160,7 @@ error[error$metric=="oxy" & error$calibration=="PEST_exm_w3", "Validation.deepm1
 
 #Temperature
 var="temp"
-obs_temp<-read.csv('observations/CleanedObsTemp.csv') %>%
+obs_temp<-read.csv('Observations/CleanedObsTemp.csv') %>%
   mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST"))) 
 obs_temp$DateTime <- as.Date(obs_temp$DateTime, format="%Y-%m-%d")
 
@@ -1246,7 +1248,8 @@ error[error$metric=="temp" & error$calibration=="PEST_exm_w3", "Validation.deepm
 
 #TD
 #Observed thermocline deph
-obs_TD<- read.csv('observations/obs_td.csv') %>%
+obs_TD<- read.csv('Observations/obs_td.csv') %>%
+  mutate(DateTime = as.Date(DateTime, format = "%Y-%m-%d"))%>%
   mutate(month = lubridate::month(DateTime)) %>%
   filter(between(month, 4, 9)) %>%
   mutate(year = lubridate::year(DateTime)) %>%
@@ -1256,15 +1259,17 @@ obs_TD<- read.csv('observations/obs_td.csv') %>%
 obs_TD$DateTime <- as.Date(obs_TD$DateTime, format="%Y-%m-%d")
 
 #Schmidt stability
-bathy <- read.csv('observations/bathymetry.csv')
+bathy <- read.csv('Observations/bathymetry.csv')
 
 #Schmidt stability observed
-schmidt_stability_obs<- read.csv("observations/Obs_SS.csv") %>%
+schmidt_stability_obs<- read.csv("Observations/Obs_SS.csv") %>%
+  mutate(datetime = as.Date(datetime, format = '%Y-%m-%d')) %>%
   filter(datetime > "2015-07-19" & datetime < "2016-12-02")
 schmidt_stability_obs$datetime<- as.Date(schmidt_stability_obs$datetime, format='%Y-%m-%d')
 
 #MOM Observed
-obs_mom<-read.csv('observations/mom_observed.csv') %>%
+obs_mom<-read.csv('Observations/mom_observed.csv') %>%
+  mutate(DateTime = as.Date(DateTime, format = "%Y-%m-%d"))%>%
   filter(DateTime > "2015-07-19" & DateTime < "2016-12-02")
 obs_mom$DateTime <- as.Date(obs_mom$DateTime, format = "%Y-%m-%d")
 depths<- c(1, 4, 8) 
@@ -1666,8 +1671,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
-ID <- seq.int(1:502)
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
+ID <- seq.int(1:500)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -1702,7 +1707,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -1788,8 +1793,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
-ID <- seq.int(1:502)
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
+ID <- seq.int(1:500)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -1824,7 +1829,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -1909,8 +1914,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
-ID <- seq.int(1:502)
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
+ID <- seq.int(1:500)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -1945,7 +1950,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -2030,8 +2035,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-12-02"), by="day"))
-ID <- seq.int(1:502)
+time <- data.frame(seq(as.Date("2015-07-20"), as.Date("2016-11-30"), by="day"))
+ID <- seq.int(1:500)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -2066,7 +2071,7 @@ anoxia$DateTime <- as.Date(anoxia$DateTime, format="%Y-%m-%d")
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Modelled
@@ -2100,7 +2105,7 @@ for (i in 1:nrow(merge_anoxia)) {
 #Deepm1 exm w3
 error[error$metric=="A" & error$calibration=="PEST_exm_w3", "Validation.deepm1"] <- MEFF_anoxia
 
-#write.csv(error, 'observations/error_stats.csv', row.names=FALSE)
+write.csv(error, 'Observations/error_stats.csv', row.names=FALSE)
 
 
 

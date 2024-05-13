@@ -16,14 +16,15 @@ library(patchwork)
 #Set working directory
 setwd(".../FCR-GLM-metrics")
 sim_folder <- getwd()
-error <- read.csv("observations/error_stats.csv")
+error <- read.csv("Observations/error_stats.csv")
 
 #Observed oxygen
-obs_oxy<-read.csv('observations/CleanedObsOxy.csv') %>%
+obs_oxy<-read.csv('Observations/CleanedObsOxy.csv') %>%
+  mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d")) %>%
   filter(DateTime > "2016-12-01")
 obs_oxy$DateTime <- as.Date(obs_oxy$DateTime, format="%Y-%m-%d")
 
-depths<- c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9.2) 
+depths<- c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9.2)
 
 #Deepm2 naive
 Deepm2_naive <- file.path(sim_folder, 'Calibrated_models/Deepm2_naive/output/output.nc')
@@ -66,7 +67,8 @@ for (i in 1:nrow(oxygen1)) {
 #error[error$metric=="oxy" & error$calibration=="PEST_N", "Calibration.deepm1"] <- MEFF_oxy1
 
 #Observed temperature
-obs_temp<-read.csv('observations/CleanedObsTemp.csv') %>%
+obs_temp<-read.csv('Observations/CleanedObsTemp.csv') %>%
+   mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d")) %>%
   filter(DateTime > "2016-12-01")
 obs_temp$DateTime <- as.Date(obs_temp$DateTime, format="%Y-%m-%d")
 
@@ -108,25 +110,29 @@ for (i in 1:nrow(temp1)) {
 #write.csv(error, 'observations/error_stats.csv', row.names=FALSE)
 
 #ERROR PLOT
-error<- read.csv("observations/error_stats.csv")
+error<- read.csv("Observations/error_stats.csv")
+
+#cbPalette
+# http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 #Schmid stabiliy error plot
 SS<- ggplot(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration.deepm1, colour = calibration))+
   geom_rect(ymin = 0.5, ymax = 1.5, 
-            xmin = -Inf, xmax = Inf, fill = '#C3D7A4', colour='NA', alpha=0.2) +
+            xmin = -Inf, xmax = Inf, fill = '#009E73', colour='NA', alpha=0.1) +
   geom_rect(ymin = 0, ymax = 0.5, 
-            xmin = -Inf, xmax = Inf, fill = '#F4EDCA', colour= 'NA', alpha=0.2) + 
+            xmin = -Inf, xmax = Inf, fill = '#F0E442', colour= 'NA', alpha=0.1) + 
   geom_rect(ymin = -1, ymax = 0, 
-            xmin = -Inf, xmax = Inf, fill = 'salmon', colour='NA', alpha=0.1) +
+            xmin = -Inf, xmax = Inf, fill = '#D55E00', colour='NA', alpha=0.1) +
   geom_point(pch=16, size=2)+  
   ggtitle("Schmidt stability")+
-  geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
-  geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
+  geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Calibration.deepm2), colour="black", pch=15, size=2)+
+  geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm2), colour="black", pch=0, size=2)+
   geom_point(data=filter(error, metric == "SS"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
   scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
                      labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
-                     values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
+                     values = c("#CC79A7", "#CC79A7", "#CC79A7", "#CC79A7", "#0072B2"))+
   ylab("MEF")+
   xlab("Model")+ 
   ylim(c(-0.5, 1))+
@@ -151,20 +157,20 @@ SS
 
 TD<- ggplot(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration.deepm1, colour = calibration))+
   geom_rect(ymin = 0.5, ymax = 1.5, 
-            xmin = -Inf, xmax = Inf, fill = '#C3D7A4', colour='NA', alpha=0.2) +
+            xmin = -Inf, xmax = Inf, fill = '#009E73', colour='NA', alpha=0.1) +
   geom_rect(ymin = 0, ymax = 0.5, 
-            xmin = -Inf, xmax = Inf, fill = '#F4EDCA', colour= 'NA', alpha=0.2) + 
+            xmin = -Inf, xmax = Inf, fill = '#F0E442', colour= 'NA', alpha=0.1) + 
   geom_rect(ymin = -1, ymax = 0, 
-            xmin = -Inf, xmax = Inf, fill = 'salmon', colour='NA', alpha=0.1) +
+            xmin = -Inf, xmax = Inf, fill = '#D55E00', colour='NA', alpha=0.1) +
   geom_point(pch=16, size=2)+  
   ggtitle("Thermocline depth")+
-  geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
-  geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
+  geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Calibration.deepm2), colour="black", pch=15, size=2)+
+  geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm2), colour="black", pch=0, size=2)+
   geom_point(data=filter(error, metric == "TD"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
   scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
                      labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
-                     values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
+                     values = c("#CC79A7", "#CC79A7", "#CC79A7", "#CC79A7", "#0072B2"))+
   ylab("MEF")+
   xlab("Model")+ 
   ylim(c(-0.5, 1))+
@@ -189,20 +195,20 @@ TD
 
 MOM<- ggplot(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibration.deepm1, colour = calibration))+
   geom_rect(ymin = 0.5, ymax = 1.5, 
-            xmin = -Inf, xmax = Inf, fill = '#C3D7A4', colour='NA', alpha=0.2) +
+            xmin = -Inf, xmax = Inf, fill = '#009E73', colour='NA', alpha=0.1) +
   geom_rect(ymin = 0, ymax = 0.5, 
-            xmin = -Inf, xmax = Inf, fill = '#F4EDCA', colour= 'NA', alpha=0.2) + 
+            xmin = -Inf, xmax = Inf, fill = '#F0E442', colour= 'NA', alpha=0.1) + 
   geom_rect(ymin = -1, ymax = 0, 
-            xmin = -Inf, xmax = Inf, fill = 'salmon', colour='NA', alpha=0.1) +
+            xmin = -Inf, xmax = Inf, fill = '#D55E00', colour='NA', alpha=0.1) +
   geom_point(pch=16, size=2)+  
   ggtitle("Metalimnetic oxygen minimum")+
-  geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
-  geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
+  geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Calibration.deepm2), colour="black", pch=15, size=2)+
+  geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm2), colour="black", pch=0, size=2)+
   geom_point(data=filter(error, metric == "MOM"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
   scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
                      labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
-                     values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
+                     values = c("#CC79A7", "#CC79A7", "#CC79A7", "#CC79A7", "#0072B2"))+
   ylab("MEF")+
   xlab("Model")+ 
   ylim(c(-0.5, 1))+
@@ -227,20 +233,20 @@ MOM
 
 AF<- ggplot(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.deepm1, colour = calibration))+
   geom_rect(ymin = 0.5, ymax = 1.5, 
-            xmin = -Inf, xmax = Inf, fill = '#C3D7A4', colour='NA', alpha=0.2) +
+            xmin = -Inf, xmax = Inf, fill = '#009E73', colour='NA', alpha=0.1) +
   geom_rect(ymin = 0, ymax = 0.5, 
-            xmin = -Inf, xmax = Inf, fill = '#F4EDCA', colour= 'NA', alpha=0.2) + 
+            xmin = -Inf, xmax = Inf, fill = '#F0E442', colour= 'NA', alpha=0.1) + 
   geom_rect(ymin = -3.5, ymax = 0, 
-            xmin = -Inf, xmax = Inf, fill = 'salmon', colour='NA', alpha=0.1) +
+            xmin = -Inf, xmax = Inf, fill = '#D55E00', colour='NA', alpha=0.1) +
   geom_point(pch=16, size=2)+  
   ggtitle("Number of anoxic layers")+
-  geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
-  geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
+  geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Calibration.deepm2), colour="black", pch=15, size=2)+
+  geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm2), colour="black", pch=0, size=2)+
   geom_point(data=filter(error, metric == "A"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
   scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
                      labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
-                     values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
+                     values = c("#CC79A7", "#CC79A7", "#CC79A7", "#CC79A7", "#0072B2"))+
   ylab("MEF")+
   xlab("Model")+ 
   ylim(c(-3.5, 1))+
@@ -265,20 +271,20 @@ AF
 
 temp <- ggplot(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm1, colour = calibration))+
   geom_rect(ymin = 0.5, ymax = 1.5, 
-            xmin = -Inf, xmax = Inf, fill = '#C3D7A4', colour='NA', alpha=0.2) +
+            xmin = -Inf, xmax = Inf, fill = '#009E73', colour='NA', alpha=0.1) +
   geom_rect(ymin = 0, ymax = 0.5, 
-            xmin = -Inf, xmax = Inf, fill = '#F4EDCA', colour= 'NA', alpha=0.2) + 
+            xmin = -Inf, xmax = Inf, fill = '#F0E442', colour= 'NA', alpha=0.1) + 
   geom_rect(ymin = -1, ymax = 0, 
-            xmin = -Inf, xmax = Inf, fill = 'salmon', colour='NA', alpha=0.1) +
+            xmin = -Inf, xmax = Inf, fill = '#D55E00', colour='NA', alpha=0.1) +
   geom_point(pch=16, size=2)+  
   ggtitle("Temperature")+
-  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
-  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
+  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2), colour="black", pch=15, size=2)+
+  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm2), colour="black", pch=0, size=2)+
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
   scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
                      labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
-                     values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
+                     values = c("#CC79A7", "#CC79A7", "#CC79A7", "#CC79A7", "#0072B2"))+
   ylab("MEF")+
   xlab("Model")+ 
   ylim(c(-0.5, 1))+
@@ -303,20 +309,20 @@ temp
 
 oxy <- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm1, colour = calibration))+
   geom_rect(ymin = 0.5, ymax = 1.5, 
-            xmin = -Inf, xmax = Inf, fill = '#C3D7A4', colour='NA', alpha=0.2) +
+            xmin = -Inf, xmax = Inf, fill = '#009E73', colour='NA', alpha=0.1) +
   geom_rect(ymin = 0, ymax = 0.5, 
-            xmin = -Inf, xmax = Inf, fill = '#F4EDCA', colour= 'NA', alpha=0.2) + 
+            xmin = -Inf, xmax = Inf, fill = '#F0E442', colour= 'NA', alpha=0.1) + 
   geom_rect(ymin = -1, ymax = 0, 
-            xmin = -Inf, xmax = Inf, fill = 'salmon', colour='NA', alpha=0.1) +
+            xmin = -Inf, xmax = Inf, fill = '#D55E00', colour='NA', alpha=0.1) +
   geom_point(pch=16, size=2)+  
   ggtitle("Oxygen")+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2), colour="blue", pch=15, size=2)+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2), colour="blue", pch=0, size=2)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2), colour="black", pch=15, size=2)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2), colour="black", pch=0, size=2)+
   geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour=calibration), pch=1, size=2) +
   scale_x_discrete(limits = c("reference", "PEST_N", "PEST_exm_w1", "PEST_exm_w2", "PEST_exm_w3"), labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"))+
   scale_color_manual(name = "Calibration", 
                      labels = c("Reference", "Naive", "Model w1", "Model w2", "Model w3"),
-                     values = c("darkorchid2", "darkorchid2", "darkorchid2", "darkorchid2", "black"))+
+                     values = c("#CC79A7", "#CC79A7", "#CC79A7", "#CC79A7", "#0072B2"))+
   ylab("MEF")+
   xlab("Model")+ 
   ylim(c(-0.5, 1))+
@@ -340,16 +346,17 @@ oxy <- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibrat
 oxy
 
 #Legend
-legend<- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm1, colour = "Calibration DM 1"), pch=16, size=4)+
-  geom_point()+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2, colour="Calibration DM 2"), pch=15, size=4)+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2, colour="Validation DM 2"), pch=0, size=4)+
-  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour="Validation DM 1"), pch=1, size=4)+
-  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2, colour="Calibration"), pch=16, size=4)+
+legend<- ggplot(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2, colour = "Calibration"), pch=16, size=4)+
+  geom_point(pch=16, size=4)+
   geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm1, colour="Validation"), pch=1, size=4)+
-  scale_colour_manual(name="Legend", 
-                      values=c("Calibration"="black", "Validation"="black", "Calibration DM 1"="darkorchid2", "Validation DM 1"="darkorchid2", "Calibration DM 2" = "blue", "Validation DM 2"="blue"),
-                      guide=guide_legend(nrow=1, override.aes=list(shape=c(16, 1, 16, 1, 15, 0), size=c(2, 2, 2, 2, 2, 2))))+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Calibration.deepm2, colour="Calibration DM 1"), pch=15, size=4)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm2, colour="Validation DM 1"), pch=0, size=4)+
+  geom_point(data=filter(error, metric == "temp"), aes(x=calibration, y=Calibration.deepm2, colour="Calibration DM 2"), pch=16, size=4)+
+  geom_point(data=filter(error, metric == "oxy"), aes(x=calibration, y=Validation.deepm1, colour="Validation DM 2"), pch=1, size=4)+
+  scale_colour_manual(name = "Legend", 
+                      labels = c("Calibration", "Validation", "Calibration DM 1", "Validation DM 1", "Calibration DM 2", "Validation DM 2"),
+                      values = c("Calibration" = "#0072B2", "Validation" = "#0072B2", "Calibration DM 1" = "#CC79A7", "Validation DM 1" = "#CC79A7", "Calibration DM 2" = "black", "Validation DM 2" = "black"),
+                      guide = guide_legend(nrow = 1, override.aes = list(shape = c(16, 1, 16, 1, 15, 0), size = c(2, 2, 2, 2, 2, 2), colour = c("#0072B2", "#0072B2", "#CC79A7", "#CC79A7", "black", "black"))))+
   theme(
     legend.text = ggplot2::element_text(size= 9),
     legend.title = ggplot2::element_blank(),
@@ -367,12 +374,11 @@ legend
 
 legend_plot<- get_legend(legend)
 
-  
-Plot_1 <- ggarrange(temp, oxy, SS, AF, TD, MOM, ncol=2, nrow=3, legend.grob=legend_plot, common.legend = TRUE)+
+Plot_1 <- ggarrange(temp, oxy, SS, MOM, TD, AF, ncol=2, nrow=3, legend.grob=legend_plot, common.legend = TRUE)+
   theme(legend.position='top', 
         legend.direction= "horizontal")
 Plot_1
-ggsave("Results/Figure7.png",
+ggsave("/Results/Figure7.png",
        plot = Plot_1,
        dpi=500,
        width = 246.2, 

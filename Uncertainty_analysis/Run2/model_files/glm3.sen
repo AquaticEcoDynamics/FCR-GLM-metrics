@@ -1,0 +1,36 @@
+                    PARAMETER SENSITIVITIES: CASE glm3
+
+
+NUMERIC PARAMETER SENSITIVITIES FOR OPTIMISATION ITERATION NO. 1   ----->
+  Parameter name   Group        Current Value        PEST_CSS_wo_reg
+   lw_fac          catch_scale  0.907136906460       0.200000011724      
+   sw_fac          catch_scale  0.956394717496       0.188108134976      
+   wind_fac        catch_scale  0.926184558789       0.117225550244      
+   ce              catch_scale  0.00168914408358     0.118549872976      
+   ch              catch_scale  0.00172057533481     0.102530939109      
+   kw              catch_scale  0.413677824320       0.121195802055      
+   sed_temp_m1     catch_scale  10.0054809465        0.184598733004      
+   sed_temp_m2     catch_scale  10.3193368743        0.133455715748      
+   sed_temp_m3     catch_scale  13.5436643200        0.156276934977      
+   sed_temp_m4     catch_scale  21.0949270637        0.120318886638      
+   sed_temp_a1     catch_scale  2.64421263803        0.150768740027      
+   sed_temp_a2     catch_scale  4.49486680697        0.161405052031      
+   sed_temp_a3     catch_scale  5.76170303599        0.138053530549      
+   sed_temp_a4     catch_scale  6.00718282661        0.113297470089      
+   sed_temp_d1     catch_scale  265.438406320        0.158326066391      
+   sed_temp_d2     catch_scale  269.973756911        0.171135666168      
+   sed_temp_d3     catch_scale  279.151289587        0.153871117011      
+   sed_temp_d4     catch_scale  278.839940212        0.147306568514      
+   sed_heat_k1     catch_scale  1.38497307548        0.133780449036      
+   sed_heat_k2     catch_scale  1.30003180834        0.118120939274      
+   sed_heat_k3     catch_scale  1.27283432252        0.131764656567      
+   sed_heat_k4     catch_scale  1.27283263565        0.118120939274      
+   fsed_oxy1       catch_scale  30.3317987515        0.126763860322      
+   fsed_oxy2       catch_scale  18.3399501635        0.120201161571      
+   fsed_oxy3       catch_scale  11.2743790720        0.141303630018      
+   fsed_oxy4       catch_scale  12.5167949517        0.121681830220      
+   ksed_oxy        catch_scale  33.7099218386        0.105973905344      
+   thsed_oxy       catch_scale  1.10442072792        0.373416116944      
+   inflow_fac      catch_scale  0.493447354566       0.128193289796      
+
+

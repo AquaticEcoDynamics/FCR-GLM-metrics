@@ -1,0 +1,2 @@
+iteration,lw_fac,sw_fac,wind_fac,cd,ce,ch,kw,sed_temp_m1,sed_temp_m2,sed_temp_m3,sed_temp_m4,sed_temp_a1,sed_temp_a2,sed_temp_a3,sed_temp_a4,sed_temp_d1,sed_temp_d2,sed_temp_d3,sed_temp_d4,sed_heat_k1,sed_heat_k2,sed_heat_k3,sed_heat_k4,fsed_oxy1,fsed_oxy2,fsed_oxy3,fsed_oxy4,ksed_oxy,thsed_oxy,inflow_fac,outflow_fac
+0,0.907137,0.956395,0.926185,0.00168914,0.00168914,0.00172058,0.413678,10.0055,10.3193,13.5437,21.0949,2.64421,4.49487,5.7617,6.00718,265.438,269.974,279.151,278.84,1.38497,1.30003,1.27283,1.27283,30.3318,18.34,11.2744,12.5168,33.7099,1.10442,0.493447,0.493447

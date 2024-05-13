@@ -9,11 +9,15 @@ library(ggplot2)
 library(ggpubr)
 
 #Set working directory
-setwd(".../FCR-GLM-metrics")
+#setwd(".../FCR-GLM-metrics")
+#setwd('/Users/Kamilla/Compile_15_11/Bubbles')
+setwd('/Users/Kamilla/Compile_old_GLM1602/Bubbles')
+sim_folder <- getwd()
+output <- nc_open("output/output.nc")
 
 #Modelled oxy
-sim_folder <- getwd()
-output <- nc_open("Calibrated_models/Deepm2_naive/output/output.nc")
+#sim_folder <- getwd()
+#output <- nc_open("Calibrated_models/Deepm2_naive/output/output.nc")
 oxy<- ncvar_get(output, "OXY_oxy")
 depth<- ncvar_get(output, "z")
 depth[depth >= 100] <- NA
@@ -62,8 +66,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2016-12-02"), as.Date("2019-12-31"), by="day"))
-ID <- seq.int(1:1125)
+time <- data.frame(seq(as.Date("2016-12-20"), as.Date("2019-12-30"), by="day"))
+ID <- seq.int(1:1106)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -223,8 +227,10 @@ melt_d<- na.omit(melt_d)
 df <- cbind(melt_t$Var2, melt_t$value, melt_d$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2016-12-02"), as.Date("2019-12-31"), by="day"))
-ID <- seq.int(1:1125)
+time <- data.frame(seq(as.Date("2016-12-20"), as.Date("2019-12-30"), by="day"))
+ID <- seq.int(1:1106)
+#time <- data.frame(seq(as.Date("2016-12-02"), as.Date("2019-12-31"), by="day"))
+#ID <- seq.int(1:1125)
 #time <- data.frame(seq(as.Date("2015-07-13"), as.Date("2016-12-01"), by="day"))
 #ID <- seq.int(1:508)
 time <- cbind(ID, time)
