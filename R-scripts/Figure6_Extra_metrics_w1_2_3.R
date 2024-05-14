@@ -24,7 +24,7 @@ w3 <- file.path(sim_folder, 'Calibrated_models/Deepm2_exm_weight3/output/output.
 error <- read.csv("observations/error_stats.csv")
 
 #Observed thermocline depth
-obs_TD<- read.csv('observations/obs_td.csv') %>%
+obs_TD<- read.csv('Observations/obs_td.csv') %>%
   mutate(month = lubridate::month(DateTime)) %>%
   filter(between(month, 4, 9)) %>%
   mutate(year = lubridate::year(DateTime)) %>%
@@ -147,7 +147,7 @@ plot_2 <- thermo_depth_model_w1 %>%
 plot_2
 
 #Schmidt stability
-bathy <- read.csv('observations/bathymetry.csv')
+bathy <- read.csv('Observations/bathymetry.csv')
 
 #Schmidt stability observed
 schmidt_stability_obs<- read.csv("observations/Obs_SS.csv") %>%
@@ -242,7 +242,7 @@ SS_plot <- ggplot(data=schmidt_stability_obs, aes(x=datetime, y=schmidt.stabilit
 SS_plot
 
 #MOM observed
-obs_mom<-read.csv('observations/mom_observed.csv') %>%
+obs_mom<-read.csv('Observations/mom_observed.csv') %>%
   #filter(DateTime > "2015-07-12" & DateTime < "2017-01-01")
   filter(DateTime > "2016-12-02" & DateTime < "2020-01-01")
 obs_mom$DateTime <- as.Date(obs_mom$DateTime, format = "%Y-%m-%d")
@@ -542,7 +542,7 @@ ggsave("Results/Figure6.png",
 
 #Calculating error (MEF) of number of anoxic layers per day for Figure 7
 #Observations
-obs_anoxic_layers <- read.csv('observations/anoxia_observed.csv') %>%
+obs_anoxic_layers <- read.csv('Observations/anoxia_observed.csv') %>%
   mutate(DateTime=as.Date(DateTime, format="%Y-%m-%d"))
 
 #Model w1

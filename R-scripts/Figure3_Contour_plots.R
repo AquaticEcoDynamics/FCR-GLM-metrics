@@ -9,11 +9,9 @@ library(ggplot2)
 library(ggpubr)
 
 #Set working directory
-#setwd(".../FCR-GLM-metrics")
-#setwd('/Users/Kamilla/Compile_15_11/Bubbles')
-setwd('/Users/Kamilla/Compile_old_GLM1602/Bubbles')
+setwd(".../FCR-GLM-metrics")
 sim_folder <- getwd()
-output <- nc_open("output/output.nc")
+
 
 #Modelled oxy
 #sim_folder <- getwd()
@@ -66,8 +64,8 @@ ct<- na.omit(ct)
 df <- cbind(co$Var2, co$value, ct$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2016-12-20"), as.Date("2019-12-30"), by="day"))
-ID <- seq.int(1:1106)
+time <- data.frame(seq(as.Date("2016-12-02"), as.Date("2019-12-30"), by="day"))
+ID <- seq.int(1:1125)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Oxy", "Depth")
@@ -118,9 +116,9 @@ modelled <-ggplot() +
 modelled
 
 #Observations
-obs_oxy <- read.csv('observations/CleanedObsOxy.csv') %>%
+obs_oxy <- read.csv('Observations/CleanedObsOxy.csv') %>%
   mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d"))
-obs_oxy_int <- read.csv('observations/obs_oxy_interpolated.csv')%>%
+obs_oxy_int <- read.csv('Observations/obs_oxy_interpolated.csv')%>%
   mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d"))
 
 #Plot observed
@@ -227,12 +225,8 @@ melt_d<- na.omit(melt_d)
 df <- cbind(melt_t$Var2, melt_t$value, melt_d$value)
 
 #Creating dataframe for time 
-time <- data.frame(seq(as.Date("2016-12-20"), as.Date("2019-12-30"), by="day"))
-ID <- seq.int(1:1106)
-#time <- data.frame(seq(as.Date("2016-12-02"), as.Date("2019-12-31"), by="day"))
-#ID <- seq.int(1:1125)
-#time <- data.frame(seq(as.Date("2015-07-13"), as.Date("2016-12-01"), by="day"))
-#ID <- seq.int(1:508)
+time <- data.frame(seq(as.Date("2016-12-02"), as.Date("2019-12-31"), by="day"))
+ID <- seq.int(1:1125)
 time <- cbind(ID, time)
 colnames(time) <- c("ID", "DateTime")
 colnames(df) <- c("ID", "Temp", "Depth")
@@ -263,7 +257,7 @@ modelledt <-ggplot() +
   scale_x_date(expand=c(0.025,0.025), limits=c(as.Date("2016-12-01"), as.Date("2019-12-06")))+
   #guides(fill=guide_legend(title="Temp", reverse=TRUE, byrow=TRUE))+
   guides(fill = guide_colourbar(ticks.colour= "black"))+
-  scale_fill_distiller(name = "°C", palette = 'Spectral', direction = -1, na.value = "grey90", guide="colourbar", limits = c(-1, 30))+
+  scale_fill_distiller(name = "\u00B0C", palette = 'Spectral', direction = -1, na.value = "grey90", guide="colourbar", limits = c(-1, 30))+
   ylab("Depth (m)")+
   ggtitle("Temperature", subtitle = "Modelled temp")+
   theme(
@@ -282,9 +276,9 @@ modelledt <-ggplot() +
 modelledt
 
 #Observed temp
-obs_temp <- read.csv('observations/CleanedObsTemp.csv') %>%
+obs_temp <- read.csv('Observations/CleanedObsTemp.csv') %>%
   mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d"))
-obs_temp_int <- read.csv('observations/obs_temp_interpolated.csv')%>%
+obs_temp_int <- read.csv('Observations/obs_temp_interpolated.csv')%>%
   mutate(DateTime = as.Date(DateTime, format="%Y-%m-%d"))
 
 #Plot observed temp
@@ -295,7 +289,7 @@ observedt<- ggplot() +
   scale_x_date(expand=c(0.025,0.025), limits=c(as.Date("2016-12-01"), as.Date("2019-12-06")))+
   guides(fill = guide_colourbar(ticks.colour= "black"))+
   ggtitle(" ", subtitle = "Observed temp")+
-  scale_fill_distiller(name = "°C", palette = 'Spectral', direction = -1, na.value = "grey90", guide="colourbar", limits=c(0, 30))+
+  scale_fill_distiller(name = "\u00B0C", palette = 'Spectral', direction = -1, na.value = "grey90", guide="colourbar", limits=c(0, 30))+
   geom_point(obs_temp, mapping = aes(x = DateTime, y = Depth), colour="black", pch=4, size=0.5)+
   ylab("Depth (m)")+
   labs(fill = "Legend", colour = NULL)+
@@ -327,7 +321,7 @@ differencet <- ggplot() +
   ggtitle(" ", subtitle = "Difference temp (Modelled - Observed)")+
   guides(fill = guide_colourbar(ticks.colour= "black"))+
   ylab("Depth (m)")+
-  scale_fill_distiller(name = "°C", palette = 'Spectral', direction = -1, na.value = "grey90", guide="colourbar") +
+  scale_fill_distiller(name = "\u00B0C", palette = 'Spectral', direction = -1, na.value = "grey90", guide="colourbar") +
   theme(
     legend.background = element_rect(fill="white"),
     legend.spacing.y = unit(3, "mm"),
@@ -355,6 +349,7 @@ mix
 
 ggsave("Results/Figure3.png",
        plot = mix,
+       dpi= 500,
        width = 246.2, 
        height = 210, 
        units = "mm")
